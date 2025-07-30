@@ -19,7 +19,9 @@
   weight: 2
   founder: true
 
-- name: Thomas J Owens
+- name: Thomas J. Owens
+  url: https://thomasjowens.com/
+  githubUsername: ThomasOwens
   contributions:
     - "2024.8"
   role: contributor
