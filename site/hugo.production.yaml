@@ -1,0 +1,5 @@
+baseURL: https://safedelusion.com
+Environment: production
+enableMissingTranslationPlaceholders: false
+printI18nWarnings: false
+minifyOutput: true

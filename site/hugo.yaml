@@ -1,4 +1,5 @@
 languageCode: en
+baseURL: https://safedelusion.com/
 title: The Safe Delusion
 
 publishDir: ../public
