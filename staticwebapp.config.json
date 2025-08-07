@@ -12,5 +12,11 @@
       }
     }
   },
-  "routes": []
+  "routes": [
+   {
+      "route": "/wp-content/uploads/sites/2/2022/10/Information-for-decision-makers-considering-the-SAFe-framework.pdf/",
+      "redirect": "/safe-decision-makers/2024.8/pdf/safe-decision-makers.2024.8.en.pdf",
+      "statusCode": 301
+    }
+  ]
 }
