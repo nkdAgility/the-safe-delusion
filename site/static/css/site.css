@@ -1,0 +1,166 @@
+/* ---------------------------------------------------------------------------
+   site.css — project styles layered on top of Bootstrap 5.3 and the
+   HugoGuides module stylesheet (/css/style.css).
+
+   The module stylesheet contains only component styling (version timelines,
+   breadcrumbs, dropdowns, buttons). It sets no typography, no reading measure
+   and no wrapping rules, so every long-form page falls back to raw Bootstrap
+   defaults. This file supplies that layer.
+
+   Loaded via _partials/components/site-styles.html. See the note in that file
+   about where this belongs long term.
+   --------------------------------------------------------------------------- */
+
+/* --- 1. Long URLs must not blow out the layout -----------------------------
+   The guide's Appendix 1 renders ~74 raw URLs as link text. Unbroken, these
+   force horizontal scroll: the guide page measured 759px of scroll width in a
+   375px viewport before this rule. This is the single most important rule in
+   the file. */
+
+main a,
+.wrapper-content a,
+.external-link {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Belt and braces: nothing in the content column may exceed it. */
+main img,
+main table,
+main pre,
+.wrapper-content img,
+.wrapper-content table,
+.wrapper-content pre {
+  max-width: 100%;
+}
+
+main pre,
+.wrapper-content pre {
+  overflow-x: auto;
+}
+
+/* The guide layout places its .row outside any .container, so Bootstrap's
+   negative gutter margins (-12px each side) have no parent padding to cancel
+   against and escape the viewport. Measured as 12px of horizontal scroll on
+   the guide page at 375px. Neutralise the margins for that row only — the
+   columns carry their own padding, so spacing is unaffected. */
+.row:has(> main.col-md-9),
+.row:has(> aside.col-md-3) {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* --- 2. Reading measure ----------------------------------------------------
+   Unconstrained, body copy ran to 104–108 characters per line at 1280px. The
+   comfortable range is 45–75; 66 is the usual target. Capping the text
+   elements rather than their container keeps Bootstrap's grid intact. */
+
+.wrapper-content p,
+.wrapper-content li,
+.wrapper-content blockquote {
+  max-width: 68ch;
+}
+
+main p,
+main li,
+main blockquote {
+  max-width: 72ch;
+}
+
+/* Headings may run slightly longer than body copy without hurting legibility. */
+.wrapper-content h2,
+.wrapper-content h3,
+main h2,
+main h3 {
+  max-width: 80ch;
+}
+
+/* --- 3. Prose rhythm -------------------------------------------------------
+   Bootstrap's default 1.5 line-height is tight for sustained reading, and
+   headings arrive with no additional space above them. */
+
+.wrapper-content,
+main {
+  line-height: 1.65;
+}
+
+.wrapper-content h2,
+main h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.wrapper-content h3,
+main h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.wrapper-content p,
+.wrapper-content li {
+  margin-bottom: 1rem;
+}
+
+.wrapper-content hr {
+  margin: 2.5rem 0;
+  opacity: 0.15;
+}
+
+/* --- 4. Accessible text on the brand colour --------------------------------
+   Bootstrap's .text-white-50 measured 3.27:1 against #135289, below the 4.5:1
+   WCAG AA threshold for body text. This replaces it. */
+
+.text-on-brand {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* --- 5. Navigation ---------------------------------------------------------
+   The header menu sits on a dark background; give the inactive items a
+   visible hover and the active item a legible pill. */
+
+.navbar-nav .nav-link,
+header .nav-pills .nav-link {
+  transition: background-color 0.15s ease-in-out;
+}
+
+header .nav-pills .nav-link:hover,
+header .nav-pills .nav-link:focus {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+header .nav-pills .nav-link.active {
+  background-color: #135289;
+  color: #fff;
+}
+
+/* --- 6. Focus visibility ---------------------------------------------------
+   Keyboard focus must be visible against both the dark header and light body. */
+
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid #ffc107;
+  outline-offset: 2px;
+}
+
+/* --- 7. Small screens ------------------------------------------------------ */
+
+@media (max-width: 575.98px) {
+  .display-5 {
+    font-size: 2rem;
+  }
+
+  .display-6 {
+    font-size: 1.75rem;
+  }
+
+  header .nav-pills {
+    gap: 0.15rem;
+  }
+
+  header .nav-pills .nav-link {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.9rem;
+  }
+}
