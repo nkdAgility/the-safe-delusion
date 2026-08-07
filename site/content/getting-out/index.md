@@ -66,21 +66,62 @@ When a result is that consistent across that much variation, it is a property of
 
 **The United States Air Force** issued a memorandum strongly discouraging rigid, prescriptive frameworks, and confirmed later that the conclusion stood.
 
-## Explaining the decision upward
+## Why it was the wrong shape to begin with
 
-{{% editor %}}
-Stopping is usually harder to say than to do, because someone approved the budget and someone will have to explain the change. Three things appear to make that conversation easier, based on how the organisations above described their own decisions.
+{{< src who="Dave Snowden" note="Creator of the Cynefin framework." anchor="dave-snowden" >}}
+
+The framework applies methods built for ordered problems — where cause and effect are known in advance, and the work can therefore be specified, sequenced and scheduled — to work where they are not. Dave Snowden's assessment is that this makes it wrong before any question of implementation quality arises.
+
+That distinction matters because it decides what can be planned. Ordered work can be laid out a quarter ahead because the answer is known and only the execution remains. Product development mostly is not that: what to build is discovered by building, showing it to someone, and being wrong in public. A method that freezes a quarter of priorities is not badly run — it is answering a question nobody asked.
+
+{{< src who="Ken Schwaber" note="Co-creator of Scrum; Agile Manifesto signatory." anchor="ken-schwaber-and-jeff-sutherland-co-authors-of-the-agile-manifesto" >}}
+
+{{% editor label="How this reads to us" %}}
+The deeper pattern is older than any of this. Separating the people who decide from the people who do is the defining move of scientific management — designed for manual work, where the task genuinely can be specified in advance by someone else.
+
+It does not transfer. In knowledge work the person doing the job knows more about it than anyone who could write the plan, which is why Ken Schwaber's position is that the people doing the work are the ones best placed to work out how, and that management's job is to help rather than to suffocate.
+
+A role hierarchy, a requirements hierarchy and a quarterly planning ceremony are all instruments for moving the thinking away from the doing. That is what they are for. It is also why the training never fixed it: the constraint was never how much your people knew.
+{{% /editor %}}
+
+## Stopping is a management discipline
+
+{{% editor label="How this reads to us" %}}
+Deciding what to stop is not an admission of failure — it is one of the ordinary jobs of management, and organisations that never do it accumulate commitments until nothing can move. Every programme should have to re-earn its place, and one that has run two years without producing the outcome it was funded for has not earned it.
+
+That framing matters practically, because it changes what you are announcing. You are not reversing a decision. You are doing the thing that should have been scheduled from the start.
+
+Three things appear to make the conversation easier, based on how the organisations above described their own.
 
 **Report the measurement, not the verdict.** "Our time from decision to customer is currently around a year" is a fact a board can act on. "SAFe isn't working" is an opinion a board can argue with. Peaksys led with the number.
 
-**Frame it as the programme having produced information.** The adoption revealed where the dependencies actually are and what the coordination genuinely costs. That is a legitimate return, and it is the return you are now acting on. It is also true.
+**Treat the programme as having produced information.** The adoption revealed where the dependencies actually are and what the coordination genuinely costs. That is a real return, and it is the return you are now acting on.
 
-**Bring the next step, not just the stop.** The question that will be asked is *by what method?* The organisations that recovered had an answer ready — teams aligned to products and customers, dependencies removed rather than scheduled, decisions made by the people doing the work.
+**Bring the next step, not just the stop.** The question that will be asked is *by what method?* Have the answer ready before you open the conversation.
 {{% /editor %}}
 
-## Where to go next
+## By what method, then
 
-The guide gathers the original sources for the ideas SAFe assembles, so you can take them from source rather than through an intermediary, and lists what successful organisations did instead.
+{{< src who="Recommended alternative" note="Going to the source of the original ideas." anchor="recommended-alternative-going-to-the-source-of-original-ideas" >}}
 
-- [Original ideas and where they came from →](/safe-decision-makers/#appendix-2---original-ideas-assimilated-by-safe)
-- [Alternatives →](/safe-decision-makers/#appendix-3---safe-alternatives-to-safe)
+The guide's answer is not another framework, and that is deliberate — the organisations that recovered did not replace one package with another.
+
+**Take the ideas from their source.** Nearly everything the framework contains was invented elsewhere and altered on the way in. Scrum, Kanban, Continuous Delivery, Lean UX, Team Topologies and the rest are all documented publicly by the people who created them, usually for free. The guide lists them with links.
+
+{{< src who="Koen Vastmans" note="On practices absorbed and misrepresented." anchor="koen-vastmans-the-agile-blender-blunder" >}}
+
+This is the part most often skipped, and it is why training did not help: people were taught an altered version and then blamed for the results. Going to source costs nothing and is the shortest available route to the thing you actually wanted.
+
+**De-scale before you scale.** Reduce the coordination load rather than industrialising it — teams aligned to products and customers, dependencies removed rather than scheduled around, architecture that lets teams move without asking permission.
+
+**Proceed by experiment.** Start small, learn, adapt, and let the approach grow out of your own circumstances rather than arriving pre-formed. This is the one point every recovered organisation in the guide has in common.
+
+{{% editor label="How this reads to us" %}}
+It is worth being honest that this is a harder thing to present than a named framework with a certification path and an implementation roadmap. It has no logo. That is a genuine disadvantage in a steering committee, and pretending otherwise would be useless to you.
+
+What it has instead is that it is what the organisations who got out actually did, and it can be described in a sentence: *we are taking these practices from the people who created them, reducing the dependencies between our teams, and changing our approach as we learn rather than committing to a plan we cannot yet write.*
+{{% /editor %}}
+
+- [The original ideas and where they came from →](/safe-decision-makers/#appendix-2---original-ideas-assimilated-by-safe)
+- [What worked instead →](/safe-decision-makers/#appendix-3---safe-alternatives-to-safe)
+- [What the guide advises against →](/safe-decision-makers/#non-recommended-alternatives)

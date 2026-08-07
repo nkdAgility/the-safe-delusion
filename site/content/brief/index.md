@@ -1,7 +1,7 @@
 ---
 title: "What it cost"
-eyebrow: "The case, in one page"
-description: "What happened to six organisations that adopted SAFe, in the terms a board measures. Every claim sourced."
+eyebrow: "For whoever can stop the programme"
+description: "What happened to six organisations that adopted SAFe, in the terms a board measures. Every claim sourced, in one page."
 type: wrapper
 weight: 40
 ---
@@ -76,12 +76,18 @@ Across every case that permits independent verification, the guide finds **no ev
 
 The organisations that recovered did so after stopping. Beijer Electronics left in June 2021 and improvement followed. Peaksys stopped. The Volvo department dropped it and worked more fluidly without it.
 
-## Before you commit further
+## What to do before committing further
 
-{{% editor %}}
-Three questions worth putting to whoever is accountable for the programme:
+{{% editor label="What this site suggests" %}}
+You do not have to decide anything about the framework to act on this. You do have to be able to measure it, and most organisations running it cannot.
 
-1. **How long does it currently take us to get one decision in front of a customer?** Peaksys measured a year and treated that as the finding.
-2. **Are we removing dependencies between teams, or scheduling around them?** The two produce very different cost curves, and only one compounds in your favour.
-3. **What would we expect to see if this were not working?** If the answer is *"we would need more time and more training"*, that condition cannot be failed.
+**Establish three numbers, before any further spend is approved.** Not opinions — numbers, with a date against them, taken now so that they mean something in six months.
+
+1. **Time from decision to customer.** How long between agreeing to do something and a customer having it. Measure end to end, not within a stage. Peaksys measured roughly a year and treated that single number as sufficient grounds to stop.
+2. **Dependencies removed versus dependencies scheduled.** Count both. The two produce very different cost curves and only one compounds in your favour. If the number scheduled is rising each quarter, the coordination cost is being industrialised rather than reduced.
+3. **Spillover, quarter by quarter.** Whether work committed in a planning cycle is completed in it, and whether the gap is closing or widening. Beijer Electronics watched this widen for three years before concluding the method was the cause.
+
+**Then ask the question that decides it.** *What would we expect to see if this were not working?*
+
+If the answer is "we would need more time, or more training, or the next version", the programme cannot be failed by any evidence, and no number you collect will ever change the decision. That is worth knowing before you spend another year.
 {{% /editor %}}

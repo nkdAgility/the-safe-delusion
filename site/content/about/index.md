@@ -1,13 +1,17 @@
 ---
 title: "About"
-eyebrow: "About this site"
-description: "Who curates the guide, how it is assembled, how to contribute, and how this site relates to it."
+eyebrow: "Why this exists"
+description: "So that the decision has an opposing view on the record before it is made. Who curates the guide, how it is assembled, and how this site relates to it."
 type: wrapper
 provenance: false
 weight: 90
 ---
 
-This site exists to serve one document: *Information for decision-makers considering the SAFe framework*. The guide is the work. Everything else here is a summary of it and a way in.
+A decision taken without a dissenting view on the record is a weaker decision, however comfortable it feels at the time. Framework adoptions are typically decided on vendor material, vendor case studies and vendor economics, with no organised account of what happened to the organisations that went first.
+
+This site exists so that account is available, in one place, before the decision rather than after it.
+
+It serves one document: *Information for decision-makers considering the SAFe framework*. The guide is the work. Everything here is a summary of it and a way in.
 
 ## The guide
 
