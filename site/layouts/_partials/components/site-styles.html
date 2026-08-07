@@ -1,0 +1,14 @@
+{{/*
+  Loads the project stylesheet.
+
+  This partial does not exist in the HugoGuides module, so it overrides nothing.
+
+  It is called from components/main-menu.html rather than from <head>, because
+  the module's baseof.html offers no head block or head partial to hook into,
+  and forking a 260-line page shell to add one <link> is a worse trade. The tag
+  is emitted at the top of <body>, which browsers honour.
+
+  If baseof.html is ever overridden or the module gains a head hook, move this
+  call there and delete the comment.
+*/}}
+<link rel="stylesheet" href="{{ "css/site.css" | relURL }}" />

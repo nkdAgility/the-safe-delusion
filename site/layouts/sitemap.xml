@@ -1,0 +1,39 @@
+{{/*
+  Custom sitemap.
+
+  The module has no sitemap template, so this overrides nothing.
+
+  Two things the default template got wrong here:
+
+  1. The guide renders at both /safe-decision-makers/ and its versioned URL
+     /safe-decision-makers/2024.8/. The versioned copy correctly canonicalises
+     to the unversioned one, but the default sitemap submitted both — telling
+     search engines to index a page we have already told them not to. This
+     template asks the module's own get-canonical-url partial and skips any page
+     whose canonical is somewhere else.
+
+  2. Empty taxonomy pages were listed. Those are disabled in hugo.yaml now, but
+     the guard stays cheap.
+*/}}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  {{- range .Data.Pages }}
+    {{- if and .Permalink (ne .Kind "taxonomy") (ne .Kind "term") }}
+      {{- $canonical := partial "functions/get-canonical-url.html" . -}}
+      {{- $self := .RelPermalink -}}
+      {{- if or (not $canonical) (eq $canonical $self) }}
+  <url>
+    <loc>{{ .Permalink }}</loc>
+        {{- if not .Lastmod.IsZero }}
+    <lastmod>{{ safeHTML ( .Lastmod.Format "2006-01-02T15:04:05-07:00" ) }}</lastmod>
+        {{- end }}
+        {{- with .Sitemap.ChangeFreq }}
+    <changefreq>{{ . }}</changefreq>
+        {{- end }}
+        {{- if ge .Sitemap.Priority 0.0 }}
+    <priority>{{ .Sitemap.Priority }}</priority>
+        {{- end }}
+  </url>
+      {{- end }}
+    {{- end }}
+  {{- end }}
+</urlset>

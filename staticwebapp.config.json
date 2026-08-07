@@ -2,16 +2,6 @@
   "platform": {
     "apiRuntime": "dotnet-isolated:8.0"
   },
-  "auth": {
-    "identityProviders": {
-      "github": {
-        "registration": {
-          "clientIdSettingName": "GITHUB_CLIENT_ID",
-          "clientSecretSettingName": "GITHUB_CLIENT_SECRET"
-        }
-      }
-    }
-  },
   "routes": [
    {
       "route": "/wp-content/uploads/sites/2/2022/10/Information-for-decision-makers-considering-the-SAFe-framework.pdf/",

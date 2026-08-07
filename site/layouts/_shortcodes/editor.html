@@ -1,0 +1,16 @@
+{{/*
+  The site speaking in its own voice, rather than reporting the guide.
+
+  Styled deliberately unlike the surrounding prose — sans-serif, sunk panel,
+  labelled — so a reader is never left guessing which is the audited evidence
+  and which is this site's commentary.
+
+  Usage:
+    {{% editor %}}
+    Markdown body here.
+    {{% /editor %}}
+*/}}
+<div class="editor-note">
+  <span class="editor-label">{{ .Get "label" | default "This site's view, not the guide's" }}</span>
+  {{ .Inner }}
+</div>

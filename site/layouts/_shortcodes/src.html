@@ -1,0 +1,26 @@
+{{/*
+  A source note. Sits in the right margin beside the claim it supports on wide
+  screens, and folds inline behind a rule on narrow ones.
+
+  Usage:
+    {{< src who="Beijer Electronics" anchor="beijer-electronics" >}}
+    {{< src who="Al Shalloway" anchor="al-shalloway-..." note="Original SAFe Principal Contributor" >}}
+
+  `anchor` is a heading id on the guide page. Every id is generated from the
+  guide's own headings, so if the guide is re-versioned these are the things to
+  re-check.
+*/}}
+<aside class="sidenote">
+  {{- with .Get "who" }}<span class="sidenote-who">{{ . }}</span>{{ end -}}
+  {{- with .Get "note" }}{{ . }} {{ end -}}
+  {{- with .Get "anchor" }}
+    {{/* The visible text is short by design, but every sidenote on a page would
+         otherwise expose an identical "Guide" link to a screen reader's link
+         list. The label names the source it points at. */}}
+    <a
+      href="{{ relURL "safe-decision-makers/" }}#{{ . }}"
+      aria-label="{{ printf "%s in the guide" ($.Get "who" | default "This source") }}"
+      >Guide&nbsp;&rarr;</a
+    >
+  {{- end -}}
+</aside>

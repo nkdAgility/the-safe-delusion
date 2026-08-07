@@ -1,0 +1,40 @@
+{{/*
+  Local override of the HugoGuides module partial of the same name.
+
+  The module ships this as a logo plus an empty <ul> with a "Generic Dropdown
+  Menu" placeholder comment, so site.Menus.main is never rendered and no
+  top-level navigation is possible. This override keeps the module's logo and
+  language switcher exactly as they were, and renders the menu defined in
+  hugo.yaml between them.
+
+  If HugoGuides gains a real menu implementation upstream, delete this file.
+*/}}
+{{- $page := . }}
+{{ partial "components/site-styles.html" . }}
+{{ partial "components/skip-link.html" . }}
+<a href="{{ (.Site.GetPage "/").Permalink }}" class="d-flex align-items-center text-white text-decoration-none" title="{{ .Site.Title }}">
+  <img src="{{ .Site.Params.menu_logo }}" alt="{{ .Site.Title }}" class="d-inline-block align-text-top me-2" style="max-height: 40px;" />
+</a>
+<ul class="nav nav-pills align-items-center">
+  {{- range .Site.Menus.main }}
+    {{- $url := .URL | relURL }}
+    {{- $active := or ($page.IsMenuCurrent "main" .) ($page.HasMenuCurrent "main" .) }}
+    {{- if not $active }}
+      {{- $active = eq $page.RelPermalink $url }}
+    {{- end }}
+    {{- if and (not $active) (ne $url "/") }}
+      {{- $active = hasPrefix $page.RelPermalink $url }}
+    {{- end }}
+    <li class="nav-item">
+      <a
+        class="nav-link {{ if $active }}active{{ else }}text-white{{ end }}"
+        href="{{ $url }}"
+        {{ if $active }}aria-current="page"{{ end }}
+      >
+        {{ .Name }}
+      </a>
+    </li>
+  {{- end }}
+
+  {{ partial "components/language-switcher.html" . }}
+</ul>
