@@ -10,18 +10,29 @@
 
 /* --- 1. Tokens ----------------------------------------------------------- */
 
+/* Every value below is sampled from the brand artwork in static/images, so the
+   page and the logo are literally the same ink. */
 :root {
-  --paper: #faf9f6;
-  --paper-sunk: #f2efe9;
-  --ink: #1c1d1f;
-  --ink-soft: #4a4f55;
-  --ink-faint: #71767d;
-  --rule: #e0dcd3;
-  --rule-strong: #c9c3b6;
+  --paper: #faf9fb;
+  --paper-sunk: #f2f0f6;
+  --ink: #21253d; /* the wordmark navy */
+  --ink-soft: #4c5170;
+  /* Held at 4.9:1 on --paper: sidenotes are 0.8rem and still have to pass AA. */
+  --ink-faint: #6b6c86;
+  --rule: #e3e0ea;
+  --rule-strong: #c8c3d6;
 
-  --brand: #135289;
-  --brand-deep: #0d3a63;
-  --brand-wash: #eef3f8;
+  --brand: #60368a; /* the "Delusion" purple */
+  --brand-deep: #45256a;
+  --brand-wash: #f3eff8;
+  /* Lifted purple, legible on the dark shell. From the app icon. */
+  --brand-lift: #8358b0;
+  /* The palette's lilac. --brand-lift only reaches 3.1:1 on --shell, so links
+     on the dark footer use this instead. */
+  --brand-pale: #c4bedb;
+
+  /* Header rule and footer: the app icon's tile colour. */
+  --shell: #11182c;
 
   /* Reserved. Used only where a vendor-published success is contradicted. */
   --contra: #9b2c22;
@@ -42,11 +53,14 @@ body {
   color: var(--ink);
 }
 
-/* Restyle the module's dark header into something slimmer and quieter. */
+/* Restyle the module's dark header into something slimmer and quieter.
+   It is white rather than dark because the logo is drawn on a white artboard;
+   on a dark bar it would show as a white slab. The rule below carries the
+   weight the dark bar used to. */
 header.bg-dark {
-  background-color: var(--ink) !important;
+  background-color: #fff !important;
   padding: 0 !important;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid var(--rule-strong);
 }
 
 header.bg-dark > .container {
@@ -58,32 +72,160 @@ header .nav-pills {
   gap: 0.1rem;
 }
 
-header .nav-pills .nav-link {
+/* The module marks inactive links with Bootstrap's .text-white utility, which
+   carries !important — so the override has to as well. */
+header .nav-pills .nav-link,
+header .nav-pills .nav-link.text-white {
   font-family: var(--sans);
   font-size: 0.85rem;
   letter-spacing: 0.02em;
   padding: 0.4rem 0.75rem;
   border-radius: 2px;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--ink-soft) !important;
   transition: background-color 0.15s, color 0.15s;
 }
 
 header .nav-pills .nav-link:hover,
-header .nav-pills .nav-link:focus {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #fff;
+header .nav-pills .nav-link:focus,
+header .nav-pills .nav-link.text-white:hover,
+header .nav-pills .nav-link.text-white:focus {
+  background-color: var(--brand-wash);
+  color: var(--brand) !important;
 }
 
-header .nav-pills .nav-link.active {
+header .nav-pills .nav-link.active,
+header .nav-pills .nav-link.active.text-white {
   background-color: transparent;
-  color: #fff;
+  color: var(--ink) !important;
   box-shadow: inset 0 -2px 0 var(--brand);
 }
 
+/* The module puts a breadcrumb inside the same header and paints it white for
+   the dark bar. On the white bar it would be invisible. */
+header .breadcrumb-nav .breadcrumb-item a {
+  color: var(--ink-faint);
+}
+
+header .breadcrumb-nav .breadcrumb-item a:hover {
+  color: var(--brand);
+}
+
+header .breadcrumb-nav .breadcrumb-item.active {
+  color: var(--ink-soft);
+}
+
+header .breadcrumb-nav .breadcrumb-item + .breadcrumb-item::before {
+  color: var(--rule-strong);
+}
+
 footer.footer {
-  background-color: var(--ink) !important;
+  background-color: var(--shell) !important;
   font-family: var(--sans);
   font-size: 0.8rem;
+}
+
+footer.footer a {
+  color: var(--brand-pale);
+}
+
+/* --- 2b. Bootstrap and module bridge -------------------------------------- */
+/* Two blues arrive from outside this file: Bootstrap's default primary, and
+   the guide nav's active pill, painted from params.brand.bg_colour in
+   hugo.yaml. Neither is ours to edit, so both are mapped here instead —
+   otherwise the retheme stops at the wrapper pages and the guide stays blue. */
+
+:root {
+  --bs-primary: #60368a;
+  --bs-primary-rgb: 96, 54, 138;
+  --bs-primary-text-emphasis: #45256a;
+  --bs-link-color: #60368a;
+  --bs-link-color-rgb: 96, 54, 138;
+  --bs-link-hover-color: #45256a;
+  --bs-link-hover-color-rgb: 69, 37, 106;
+  --bs-nav-pills-link-active-bg: #60368a;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--brand);
+  --bs-btn-border-color: var(--brand);
+  --bs-btn-hover-bg: var(--brand-deep);
+  --bs-btn-hover-border-color: var(--brand-deep);
+  --bs-btn-active-bg: var(--brand-deep);
+  --bs-btn-active-border-color: var(--brand-deep);
+  --bs-btn-disabled-bg: var(--brand);
+  --bs-btn-disabled-border-color: var(--brand);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--brand);
+  --bs-btn-border-color: var(--brand);
+  --bs-btn-hover-bg: var(--brand);
+  --bs-btn-hover-border-color: var(--brand);
+  --bs-btn-active-bg: var(--brand);
+  --bs-btn-active-border-color: var(--brand);
+}
+
+/* The guide's own section nav. One class more specific than the module rule. */
+.guide-nav-menu .nav-pills .nav-link.active {
+  background-color: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+.guide-nav-menu .nav-pills .nav-link:hover {
+  color: var(--brand);
+  background-color: var(--brand-wash);
+}
+
+/* The module's own blue, #1d7fd5, set with !important throughout its
+   style.css. Buttons first, then the version timeline on the guide's
+   history page. Colour only — no geometry is touched. */
+
+.btn-primary {
+  background-color: var(--brand) !important;
+  border-color: var(--brand) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: var(--brand-deep) !important;
+  border-color: var(--brand-deep) !important;
+}
+
+.btn-outline-primary {
+  color: var(--brand) !important;
+  border-color: var(--brand) !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active {
+  background-color: var(--brand) !important;
+  border-color: var(--brand) !important;
+}
+
+.version-timeline::before {
+  background: linear-gradient(to bottom, var(--brand) 0%, #6c757d 30%, #6c757d 100%);
+}
+
+.version-latest .card {
+  box-shadow: 0 8px 25px rgba(96, 54, 138, 0.15) !important;
+}
+
+.version-fork-indicator .fork-text {
+  border-color: var(--brand);
+  color: var(--brand);
+  box-shadow: 0 4px 15px rgba(96, 54, 138, 0.2);
+}
+
+.version-fork-indicator .fork-text::before {
+  border-bottom-color: var(--brand);
+}
+
+.version-latest::after {
+  background: var(--brand);
+  box-shadow: 0 2px 8px rgba(96, 54, 138, 0.3);
 }
 
 /* --- 3. Wrapper page canvas ---------------------------------------------- */
@@ -239,7 +381,7 @@ footer.footer {
 .sidenote a {
   color: var(--brand);
   text-decoration: none;
-  border-bottom: 1px solid rgba(19, 82, 137, 0.35);
+  border-bottom: 1px solid rgba(96, 54, 138, 0.35);
 }
 
 .sidenote a:hover {

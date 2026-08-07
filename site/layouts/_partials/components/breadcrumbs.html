@@ -1,0 +1,55 @@
+{{/*
+  Local override of the HugoGuides module partial of the same name.
+
+  The module decides whether the current page is a guide version with:
+
+      {{ $latestVersion := partial "functions/get-latest-version" . }}
+      {{ if (strings.Contains .RelPermalink $latestVersion) }}Latest{{ else }}…
+
+  On any page outside the guide section, get-latest-version returns an empty
+  string — and strings.Contains against "" is always true. So every wrapper page
+  rendered its breadcrumb as "Home > Latest" instead of its own title.
+
+  The only change here is guarding that test against an empty version. Everything
+  else matches the module. If HugoGuides fixes this upstream, delete this file.
+*/}}
+{{- if gt (len .Ancestors) 0 }}
+  <nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <ol class="breadcrumb mb-0">
+      {{/* Home breadcrumb */}}
+      <li class="breadcrumb-item">
+        <a href="{{ (.Site.GetPage "/").Permalink }}" class="text-decoration-none">
+          <i class="fas fa-home me-1" aria-hidden="true"></i>
+          {{ i18n "breadcrumb_home" | default "Home" }}
+        </a>
+      </li>
+
+      {{/* Build breadcrumb path from ancestors */}}
+      {{- range .Ancestors.Reverse }}
+        {{- if ne .Kind "home" }}
+          <li class="breadcrumb-item">
+            <a href="{{ .Permalink }}" class="text-decoration-none">
+              {{- if eq .Section "latest" -}}
+                Latest
+              {{- else if (strings.Contains .RelPermalink "/latest/") -}}
+                Latest
+              {{- else -}}
+                {{ .Params.short_title | default .Title }}
+              {{- end -}}
+            </a>
+          </li>
+        {{- end }}
+      {{- end }}
+
+      {{/* Current page (no link) */}}
+      <li class="breadcrumb-item active" aria-current="page">
+        {{- $latestVersion := partial "functions/get-latest-version" . }}
+        {{- if and $latestVersion (strings.Contains .RelPermalink $latestVersion) -}}
+          Latest
+        {{- else -}}
+          {{ .Params.short_title | default .Title }}
+        {{- end -}}
+      </li>
+    </ol>
+  </nav>
+{{- end }}
