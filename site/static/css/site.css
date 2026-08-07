@@ -1,166 +1,795 @@
-/* ---------------------------------------------------------------------------
-   site.css — project styles layered on top of Bootstrap 5.3 and the
-   HugoGuides module stylesheet (/css/style.css).
+/* ===========================================================================
+   site.css — design system for the wrapper pages.
 
-   The module stylesheet contains only component styling (version timelines,
-   breadcrumbs, dropdowns, buttons). It sets no typography, no reading measure
-   and no wrapping rules, so every long-form page falls back to raw Bootstrap
-   defaults. This file supplies that layer.
+   The guide page is deliberately left alone. It is the primary source and
+   should read as the document on the table; these pages are the reading room
+   around it. Only defect fixes (§9) reach the guide.
 
-   Loaded via _partials/components/site-styles.html. See the note in that file
-   about where this belongs long term.
-   --------------------------------------------------------------------------- */
+   Loaded via _partials/components/site-styles.html.
+   =========================================================================== */
 
-/* --- 1. Long URLs must not blow out the layout -----------------------------
-   The guide's Appendix 1 renders ~74 raw URLs as link text. Unbroken, these
-   force horizontal scroll: the guide page measured 759px of scroll width in a
-   375px viewport before this rule. This is the single most important rule in
-   the file. */
+/* --- 1. Tokens ----------------------------------------------------------- */
+
+:root {
+  --paper: #faf9f6;
+  --paper-sunk: #f2efe9;
+  --ink: #1c1d1f;
+  --ink-soft: #4a4f55;
+  --ink-faint: #71767d;
+  --rule: #e0dcd3;
+  --rule-strong: #c9c3b6;
+
+  --brand: #135289;
+  --brand-deep: #0d3a63;
+  --brand-wash: #eef3f8;
+
+  /* Reserved. Used only where a vendor-published success is contradicted. */
+  --contra: #9b2c22;
+  --contra-wash: #fbf1ef;
+
+  --serif: ui-serif, Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --measure: 34rem;
+  --note-col: 15rem;
+  --gutter: 2.5rem;
+}
+
+/* --- 2. Page shell ------------------------------------------------------- */
+
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+/* Restyle the module's dark header into something slimmer and quieter. */
+header.bg-dark {
+  background-color: var(--ink) !important;
+  padding: 0 !important;
+  border-bottom: 1px solid #000;
+}
+
+header.bg-dark > .container {
+  padding-top: 0.6rem !important;
+  padding-bottom: 0.6rem !important;
+}
+
+header .nav-pills {
+  gap: 0.1rem;
+}
+
+header .nav-pills .nav-link {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  padding: 0.4rem 0.75rem;
+  border-radius: 2px;
+  color: rgba(255, 255, 255, 0.72);
+  transition: background-color 0.15s, color 0.15s;
+}
+
+header .nav-pills .nav-link:hover,
+header .nav-pills .nav-link:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+header .nav-pills .nav-link.active {
+  background-color: transparent;
+  color: #fff;
+  box-shadow: inset 0 -2px 0 var(--brand);
+}
+
+footer.footer {
+  background-color: var(--ink) !important;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+}
+
+/* --- 3. Wrapper page canvas ---------------------------------------------- */
+
+.wrapper-page {
+  padding: 0 0 5rem;
+}
+
+.wrapper-masthead {
+  border-bottom: 1px solid var(--rule);
+  padding: 3.5rem 0 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.wrapper-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand);
+  margin-bottom: 0.9rem;
+}
+
+.wrapper-title {
+  font-family: var(--serif);
+  font-size: clamp(2.1rem, 5vw, 3.1rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.9rem;
+}
+
+.wrapper-standfirst {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 38rem;
+  margin: 0;
+}
+
+/* --- 4. The reading column ------------------------------------------------ */
+/* Content sits in a fixed measure. Sources are floated into the margin beside
+   it (see §6) rather than placed in a grid track, because a float attaches to
+   the content that follows it — which matches how the notes are authored, with
+   the note written immediately before the claim it supports. */
+
+.wrapper-body {
+  max-width: var(--measure);
+}
+
+@media (min-width: 62em) {
+  .wrapper-body {
+    /* Room for the note column to sit outside the measure without clipping. */
+    padding-right: 0;
+  }
+}
+
+/* --- 5. Prose ------------------------------------------------------------ */
+
+.wrapper-body {
+  font-family: var(--serif);
+  font-size: 1.075rem;
+  line-height: 1.68;
+  color: var(--ink);
+}
+
+.wrapper-body p {
+  margin: 0 0 1.35rem;
+}
+
+.wrapper-body h2 {
+  font-family: var(--serif);
+  font-size: 1.65rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 3.25rem 0 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+
+.wrapper-body h3 {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 2.25rem 0 0.75rem;
+}
+
+.wrapper-body ul,
+.wrapper-body ol {
+  margin: 0 0 1.35rem;
+  padding-left: 1.15rem;
+}
+
+.wrapper-body li {
+  margin-bottom: 0.6rem;
+}
+
+.wrapper-body strong {
+  font-weight: 700;
+}
+
+.wrapper-body a {
+  color: var(--brand);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;
+}
+
+.wrapper-body a:hover {
+  color: var(--brand-deep);
+}
+
+.wrapper-body hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 3rem 0;
+  opacity: 1;
+}
+
+.wrapper-body blockquote {
+  margin: 1.75rem 0;
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--rule-strong);
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* --- 6. Sidenotes -------------------------------------------------------- */
+/* Every claim shows its receipt in the margin. Below the breakpoint they
+   fold inline, indented behind a rule, rather than disappearing. */
+
+.sidenote {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--ink-faint);
+  margin: 0 0 1.35rem;
+  padding-left: 0.85rem;
+  border-left: 2px solid var(--rule-strong);
+}
+
+.sidenote .sidenote-who {
+  display: block;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 0.15rem;
+}
+
+.sidenote a {
+  color: var(--brand);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(19, 82, 137, 0.35);
+}
+
+.sidenote a:hover {
+  border-bottom-color: var(--brand);
+}
+
+@media (min-width: 62em) {
+  .sidenote {
+    float: right;
+    clear: right;
+    width: var(--note-col);
+    margin-right: calc(-1 * (var(--note-col) + var(--gutter)));
+    margin-top: 0.4rem;
+    margin-bottom: 1rem;
+    padding-left: 0;
+    padding-top: 0.5rem;
+    border-left: 0;
+    border-top: 2px solid var(--rule-strong);
+  }
+}
+
+/* --- 7. Two registers ----------------------------------------------------- */
+/* The guide's evidence and this site's commentary must never look alike. */
+
+.editor-note {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  background: var(--paper-sunk);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--ink-faint);
+  padding: 1.15rem 1.35rem;
+  margin: 2rem 0;
+  color: var(--ink-soft);
+}
+
+.editor-note > .editor-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.5rem;
+}
+
+.editor-note p:last-child {
+  margin-bottom: 0;
+}
+
+/* A contradiction: something the vendor published as a success. Rare by
+   design — if this appears more than a few times site-wide it stops working. */
+.contradiction {
+  border-left: 3px solid var(--contra);
+  background: var(--contra-wash);
+  padding: 1rem 1.25rem;
+  margin: 2rem 0;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  color: #5c1a15;
+}
+
+/* --- 8. Wayfinding ------------------------------------------------------- */
+
+.spine {
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.spine ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0.85rem 0;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+
+.spine a {
+  color: var(--ink-faint);
+  text-decoration: none;
+}
+
+.spine a:hover {
+  color: var(--brand);
+}
+
+.spine li[aria-current] a {
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--brand);
+}
+
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  border-top: 1px solid var(--rule);
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+}
+
+.page-nav a {
+  color: var(--brand);
+  text-decoration: none;
+}
+
+.page-nav a:hover {
+  text-decoration: underline;
+}
+
+.page-nav .page-nav-label {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.2rem;
+}
+
+.provenance {
+  margin-top: 3rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--ink-faint);
+}
+
+.provenance a {
+  color: var(--ink-soft);
+}
+
+/* --- 8b. Home ------------------------------------------------------------- */
+
+.home-hero {
+  padding: 4.5rem 0 2.75rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 3rem;
+}
+
+.home-title {
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 6vw, 3.9rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.1rem;
+}
+
+.home-lede {
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 40rem;
+  margin: 0;
+}
+
+.section-head {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 1.5rem;
+}
+
+/* Symptoms: a list of hairlines, not a grid of cards. */
+.symptom-list {
+  list-style: none;
+  margin: 0 0 3.5rem;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+  max-width: 52rem;
+}
+
+.symptom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 1.5rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.symptom-claim {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 1.4;
+  flex: 1 1 22rem;
+}
+
+.symptom-src {
+  font-family: var(--sans);
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-faint);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule-strong);
+  white-space: nowrap;
+}
+
+.symptom-src:hover {
+  color: var(--brand);
+  border-bottom-color: var(--brand);
+}
+
+/* The turn: the one full-bleed statement on the page. */
+.turn {
+  background: var(--brand-deep);
+  color: #fff;
+  padding: 3.5rem 0;
+  margin: 0 0 3.5rem;
+}
+
+.turn-head {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin: 0 0 1.25rem;
+  max-width: 30rem;
+}
+
+.turn-body {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 38rem;
+  color: rgba(255, 255, 255, 0.93);
+  margin: 0 0 1rem;
+}
+
+.turn-body-quiet {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.82);
+  margin-bottom: 0;
+}
+
+/* Findings */
+.findings {
+  max-width: 40rem;
+  margin-bottom: 3.5rem;
+}
+
+.findings-intro {
+  font-family: var(--serif);
+  font-size: 1.075rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0 0 1.25rem;
+}
+
+.findings-list {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 1.5;
+  margin: 0 0 1.5rem;
+  padding-left: 1.4rem;
+}
+
+.findings-list li {
+  margin-bottom: 0.85rem;
+  padding-left: 0.35rem;
+}
+
+.findings-list li::marker {
+  color: var(--brand);
+  font-family: var(--sans);
+  font-size: 0.85rem;
+}
+
+.findings-src a,
+.source-about a {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  color: var(--brand);
+  text-decoration: none;
+}
+
+.findings-src a:hover,
+.source-about a:hover {
+  text-decoration: underline;
+}
+
+/* Evidence scale: typographic, not stat tiles. */
+.evidence-strip {
+  display: grid;
+  gap: 1.75rem;
+  grid-template-columns: 1fr;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 1.75rem 0;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 48em) {
+  .evidence-strip {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+.evidence-figure {
+  display: block;
+  font-family: var(--serif);
+  font-size: 2.75rem;
+  line-height: 1;
+  color: var(--brand);
+  margin-bottom: 0.4rem;
+}
+
+.evidence-label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--ink-faint);
+}
+
+.editor-links {
+  margin-bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.editor-note a {
+  color: var(--brand);
+}
+
+/* Doors */
+.doors {
+  list-style: none;
+  margin: 0 0 4rem;
+  padding: 0;
+  display: grid;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+
+@media (min-width: 48em) {
+  .doors {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.door a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background: var(--paper);
+  text-decoration: none;
+  transition: background-color 0.15s;
+}
+
+.door a:hover {
+  background: var(--brand-wash);
+}
+
+.door-who {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.door-what {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ink);
+  flex-grow: 1;
+}
+
+.door-go {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--brand);
+}
+
+/* The source */
+.source-block {
+  background: var(--paper-sunk);
+  border-top: 1px solid var(--rule);
+  padding: 3.5rem 0 4rem;
+}
+
+.source-title {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  line-height: 1.2;
+  margin: 0 0 1rem;
+  max-width: 34rem;
+}
+
+.source-desc {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 42rem;
+}
+
+.source-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  margin: 1.75rem 0 2.5rem;
+}
+
+.source-primary {
+  display: inline-block;
+  background: var(--brand);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.7rem 1.5rem;
+  border-radius: 2px;
+  text-decoration: none;
+}
+
+.source-primary:hover {
+  background: var(--brand-deep);
+  color: #fff;
+}
+
+.source-meta {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+}
+
+.source-people {
+  border-top: 1px solid var(--rule-strong);
+  padding-top: 1.5rem;
+}
+
+.source-avatars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.source-about {
+  margin: 2rem 0 0;
+}
+
+/* --- 9. Defect fixes that must also reach the guide page ------------------ */
+/* Measured before these rules: 759px of horizontal scroll at 375px viewport,
+   caused by ~74 unbroken raw URLs in Appendix 1; plus 12px of gutter escape
+   from a .row rendered outside any .container. */
 
 main a,
-.wrapper-content a,
 .external-link {
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-/* Belt and braces: nothing in the content column may exceed it. */
 main img,
 main table,
-main pre,
-.wrapper-content img,
-.wrapper-content table,
-.wrapper-content pre {
+main pre {
   max-width: 100%;
 }
 
-main pre,
-.wrapper-content pre {
+main pre {
   overflow-x: auto;
 }
 
-/* The guide layout places its .row outside any .container, so Bootstrap's
-   negative gutter margins (-12px each side) have no parent padding to cancel
-   against and escape the viewport. Measured as 12px of horizontal scroll on
-   the guide page at 375px. Neutralise the margins for that row only — the
-   columns carry their own padding, so spacing is unaffected. */
 .row:has(> main.col-md-9),
 .row:has(> aside.col-md-3) {
   margin-left: 0;
   margin-right: 0;
 }
 
-/* --- 2. Reading measure ----------------------------------------------------
-   Unconstrained, body copy ran to 104–108 characters per line at 1280px. The
-   comfortable range is 45–75; 66 is the usual target. Capping the text
-   elements rather than their container keeps Bootstrap's grid intact. */
-
-.wrapper-content p,
-.wrapper-content li,
-.wrapper-content blockquote {
-  max-width: 68ch;
-}
-
+/* Reading measure for the guide's own body copy. */
 main p,
 main li,
 main blockquote {
   max-width: 72ch;
 }
 
-/* Headings may run slightly longer than body copy without hurting legibility. */
-.wrapper-content h2,
-.wrapper-content h3,
-main h2,
-main h3 {
-  max-width: 80ch;
-}
-
-/* --- 3. Prose rhythm -------------------------------------------------------
-   Bootstrap's default 1.5 line-height is tight for sustained reading, and
-   headings arrive with no additional space above them. */
-
-.wrapper-content,
-main {
-  line-height: 1.65;
-}
-
-.wrapper-content h2,
-main h2 {
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.wrapper-content h3,
-main h3 {
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
-}
-
-.wrapper-content p,
-.wrapper-content li {
-  margin-bottom: 1rem;
-}
-
-.wrapper-content hr {
-  margin: 2.5rem 0;
-  opacity: 0.15;
-}
-
-/* --- 4. Accessible text on the brand colour --------------------------------
-   Bootstrap's .text-white-50 measured 3.27:1 against #135289, below the 4.5:1
-   WCAG AA threshold for body text. This replaces it. */
-
-.text-on-brand {
-  color: rgba(255, 255, 255, 0.92);
-}
-
-/* --- 5. Navigation ---------------------------------------------------------
-   The header menu sits on a dark background; give the inactive items a
-   visible hover and the active item a legible pill. */
-
-.navbar-nav .nav-link,
-header .nav-pills .nav-link {
-  transition: background-color 0.15s ease-in-out;
-}
-
-header .nav-pills .nav-link:hover,
-header .nav-pills .nav-link:focus {
-  background-color: rgba(255, 255, 255, 0.12);
-  color: #fff;
-}
-
-header .nav-pills .nav-link.active {
-  background-color: #135289;
-  color: #fff;
-}
-
-/* --- 6. Focus visibility ---------------------------------------------------
-   Keyboard focus must be visible against both the dark header and light body. */
+/* --- 10. Focus ------------------------------------------------------------ */
 
 a:focus-visible,
 button:focus-visible,
 .btn:focus-visible {
-  outline: 3px solid #ffc107;
+  outline: 3px solid #d9a441;
   outline-offset: 2px;
 }
 
-/* --- 7. Small screens ------------------------------------------------------ */
+/* --- 11. Print — /brief/ is forwarded and printed ------------------------- */
 
-@media (max-width: 575.98px) {
-  .display-5 {
-    font-size: 2rem;
+@media print {
+  header,
+  footer,
+  .spine,
+  .page-nav {
+    display: none !important;
   }
 
-  .display-6 {
-    font-size: 1.75rem;
+  body {
+    background: #fff;
+    font-size: 11pt;
   }
 
-  header .nav-pills {
-    gap: 0.15rem;
+  .wrapper-body {
+    display: block;
+    font-size: 11pt;
   }
 
-  header .nav-pills .nav-link {
-    padding: 0.35rem 0.6rem;
-    font-size: 0.9rem;
+  .wrapper-masthead {
+    padding-top: 0;
+  }
+
+  .sidenote {
+    border-left: 1px solid #999;
+    color: #333;
+    page-break-inside: avoid;
+  }
+
+  .wrapper-body h2 {
+    page-break-after: avoid;
+  }
+
+  .wrapper-body a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  .wrapper-body a[href^="/"]::after {
+    content: " (safedelusion.com" attr(href) ")";
+    font-size: 8pt;
+    color: #555;
   }
 }

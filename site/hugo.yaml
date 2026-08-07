@@ -50,7 +50,6 @@ params:
   logo_image: "/images/safe-delusion-logo.png" # URL to the site logo image
   menu_logo: "/images/safe-delusion-logo.png" # URL to the main menu logo image
   siteProdUrl: "https://safedelusion.com"
-  supportEmail: "support@safedelusion.com"
   brand:
     bg_colour: "#135289"
   AzureSitesConfig: "#{SAFeDelusion_AzureSitesConfig}#"

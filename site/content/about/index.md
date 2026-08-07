@@ -1,7 +1,9 @@
 ---
 title: "About"
+eyebrow: "About this site"
 description: "Who curates the guide, how it is assembled, how to contribute, and how this site relates to it."
 type: wrapper
+provenance: false
 weight: 90
 ---
 
@@ -23,13 +25,18 @@ The guide is explicit about the limits of its own argument. No single case study
 
 [The premises →](/safe-decision-makers/#premises) · [How success is defined →](/safe-decision-makers/#faq-how-do-you-define-success)
 
-## Contributing
+## Contributing and discussion
 
-The guide is open and still being curated. Corrections, additions and disagreement all go through the same route.
+**All discussion happens in the [Agile Informed Decision Making group](https://groups.google.com/g/agileinformeddecisionmaking).** Corrections, additions, questions and disagreement all go there — there is no separate contact address. New members are asked to introduce themselves and say what brought them.
 
-- [Join the discussion group](https://groups.google.com/g/agileinformeddecisionmaking)
-- [The contribution guidelines](/safe-decision-makers/#contributors-and-guidelines-for-contributions)
-- [The repository](https://github.com/nkdAgility/the-safe-delusion)
+Two things the group software enforces silently, so they are worth knowing before you post:
+
+- **Post through the web interface, or email the group from the address you subscribed with.** A message sent from any other address is lost without a bounce.
+- **Attachments are discarded.** Google Groups does not allow them and does not warn you. Paste the text or link to it.
+
+The group also covers the companion documents on [large consultancy firms' Agile offerings](https://bit.ly/agileOffering4DecisionMakers) and [investing in Agile](http://bit.ly/AgileInvestingExecutiveSummary).
+
+For the guide's own rules on contributing, see [the contribution guidelines](/safe-decision-makers/#contributors-and-guidelines-for-contributions). Site issues can be raised in [the repository](https://github.com/nkdAgility/the-safe-delusion).
 
 If you believe you have been misquoted, or you want to respond to any part of the guide, there is a [standing right of reply](/right-of-reply/).
 

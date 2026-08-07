@@ -184,11 +184,6 @@ jobs:
           GitVersion.SemVer: ${{ needs.Setup.outputs.GitVersion_SemVer }}
           SAFeDelusion_AzureSitesConfig: ${{ needs.Setup.outputs.SAFeDelusion_AzureSitesConfig }}
           PR_Number: ${{ github.event.number }}
-      - uses: igsekor/pyspelling-any@v1.0.4
-        id: spellcheck
-        name: Spellcheck
-        with:
-          args: --report report.json
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:

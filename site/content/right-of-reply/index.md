@@ -1,5 +1,6 @@
 ---
 title: "Right of reply"
+eyebrow: "Standing invitation"
 description: "Scaled Agile Inc. and anyone named in the guide are invited to respond. Responses are published unedited."
 type: wrapper
 weight: 80
@@ -17,7 +18,12 @@ The guide invites Scaled Agile Inc. to engage with the community and to act on w
 
 ## How to respond
 
-Write to [support@safedelusion.com](mailto:support@safedelusion.com), or raise it directly with the curators in the [discussion group](https://groups.google.com/g/agileinformeddecisionmaking).
+Post to the [Agile Informed Decision Making group](https://groups.google.com/g/agileinformeddecisionmaking), where the curators and the wider community discuss the guide directly. Introduce yourself and say what you would like to respond to.
+
+Two things are worth knowing before you post, because the group software enforces both silently:
+
+- **Post through the web interface, or email the group from the address you subscribed with.** A message sent from any other address is lost without a bounce.
+- **Attachments are discarded.** Google Groups does not allow them, and it does not warn you. Paste the text or link to it.
 
 ## What will happen
 
@@ -29,6 +35,3 @@ Two things are: anything unlawful, and anything directed at an individual rather
 
 None to date. This section will list them as they arrive.
 
----
-
-<p><small><em>This page is published by this site alongside the 2024.8 edition of <a href="/safe-decision-makers/">Information for decision-makers considering the SAFe framework</a>, an independently curated, community-reviewed document licensed CC BY-SA 4.0. Corrections to the guide itself are made by its curators through the process described in its <a href="/safe-decision-makers/#contributors-and-guidelines-for-contributions">contribution guidelines</a>.</em></small></p>

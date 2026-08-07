@@ -1,27 +1,91 @@
 {{/*
-  Layout for wrapper pages (type: wrapper).
+  Layout for wrapper pages (type: wrapper) — the summary pages around the guide.
 
-  These are the summary pages around the guide — not the guide itself.
   This path does not exist in the HugoGuides module, so nothing is overridden.
-  The module's own single.html is a placeholder stub and does not render content.
-*/}}
-{{- define "main" }}
-  <article class="container my-5">
-    <div class="row justify-content-center">
-      <div class="col-12 col-lg-9">
-        <header class="mb-4 pb-3 border-bottom">
-          <h1 class="display-6 text-dark mb-2">{{ .Title }}</h1>
-          {{- with .Description }}
-            <p class="lead text-muted mb-0">{{ . }}</p>
-          {{- end }}
-        </header>
+  The module's own single.html is a placeholder stub that does not render
+  content at all.
 
-        <div class="wrapper-content">
-          {{ .Content }}
-        </div>
+  Structure: a spine for wayfinding, an editorial masthead, then a two-column
+  reading grid where sources sit in the margin beside the claims they support.
+*/}}
+
+{{- define "main" }}
+  {{- $spine := slice
+    (dict "url" "/brief/"                "label" "The case")
+    (dict "url" "/getting-out/"          "label" "Already running it")
+    (dict "url" "/objections/"           "label" "The defences")
+    (dict "url" "/safe-decision-makers/" "label" "The evidence")
+  -}}
+  {{- $here := .RelPermalink -}}
+  {{- $idx := -1 -}}
+  {{- range $i, $s := $spine }}
+    {{- if eq (relURL $s.url) $here }}{{ $idx = $i }}{{ end }}
+  {{- end }}
+
+  {{- if ge $idx 0 }}
+    <nav class="spine" aria-label="Where you are">
+      <div class="container">
+        <ol>
+          {{- range $i, $s := $spine }}
+            <li {{ if eq $i $idx }}aria-current="page"{{ end }}>
+              <a href="{{ relURL $s.url }}">{{ $s.label }}</a>
+            </li>
+          {{- end }}
+        </ol>
       </div>
+    </nav>
+  {{- end }}
+
+  <div class="wrapper-page">
+    <div class="container">
+      <header class="wrapper-masthead">
+        {{- with .Params.eyebrow }}
+          <p class="wrapper-eyebrow">{{ . }}</p>
+        {{- end }}
+        <h1 class="wrapper-title">{{ .Title }}</h1>
+        {{- with .Description }}
+          <p class="wrapper-standfirst">{{ . }}</p>
+        {{- end }}
+      </header>
+
+      <div class="wrapper-body">
+        {{ .Content }}
+
+        {{- if .Params.provenance | default true }}
+          {{- $guide := site.GetPage "/safe-decision-makers/2024.8" }}
+          <p class="provenance">
+            {{- with $guide }}
+              This page is a summary written by this site. It is derived from the {{ .Params.version }} edition of
+              <a href="{{ relURL "safe-decision-makers/" }}">Information for decision-makers considering the SAFe framework</a>,
+              an independently curated, community-reviewed document licensed
+              <a href="http://creativecommons.org/licenses/by-sa/4.0/" rel="license">CC&nbsp;BY-SA&nbsp;4.0</a>.
+              The guide is the source and carries the full evidence and every original reference.
+              Where this page and the guide differ, the guide is correct.
+            {{- end }}
+          </p>
+        {{- end }}
+      </div>
+
+      {{- if ge $idx 0 }}
+        <nav class="page-nav container-fluid px-0" aria-label="Continue">
+          <div>
+            {{- if gt $idx 0 }}
+              {{- $p := index $spine (sub $idx 1) }}
+              <span class="page-nav-label">Previous</span>
+              <a href="{{ relURL $p.url }}">&larr; {{ $p.label }}</a>
+            {{- end }}
+          </div>
+          <div class="text-end">
+            {{- if lt $idx (sub (len $spine) 1) }}
+              {{- $n := index $spine (add $idx 1) }}
+              <span class="page-nav-label">Next</span>
+              <a href="{{ relURL $n.url }}">{{ $n.label }} &rarr;</a>
+            {{- end }}
+          </div>
+        </nav>
+      {{- end }}
     </div>
-  </article>
+  </div>
 {{- end }}
 
 {{- define "template" }}

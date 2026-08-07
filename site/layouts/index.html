@@ -2,10 +2,9 @@
   {{/*
     Home page.
 
-    Everything factual on this page is derived from the guide at build time —
-    counts, conclusions and links. Nothing is hand-copied from it. If you need a
-    new fact here, extract it below rather than typing it in the markup.
-    See CLAUDE.md.
+    Everything factual here is extracted from the guide at build time — counts,
+    conclusions, anchors. Nothing is hand-copied. If you need a new fact on this
+    page, pull it out below rather than typing it into the markup. See CLAUDE.md.
   */}}
 
   {{- $guide := site.GetPage "/safe-decision-makers/2024.8" }}
@@ -16,18 +15,15 @@
 
   {{- with $guide }}
     {{- $raw = .RawContent }}
-
     {{/* Case studies: count H3s in the Case studies section, less its Conclusions heading. */}}
     {{- with findRE `(?s)## Case studies.*?\n## SAFe experts` $raw 1 }}
       {{- $caseCount = sub (len (findRE `(?m)^### ` (index . 0))) 1 }}
     {{- end }}
-
     {{/* Sources: linked bullets in Appendix 1. */}}
     {{- with findRE `(?s)# Appendix 1 - Sources.*?\n# Appendix 2` $raw 1 }}
       {{- $sourceCount = len (findRE `(?m)^- \[` (index . 0)) }}
     {{- end }}
-
-    {{/* The three general conclusions, as written in the guide. */}}
+    {{/* The general conclusions, as written in the guide. */}}
     {{- with findRE `(?s)# General conclusions.*?\n# ` $raw 1 }}
       {{- range findRE `(?m)^- .+$` (index . 0) }}
         {{- $conclusions = $conclusions | append (strings.TrimPrefix "- " .) }}
@@ -35,249 +31,173 @@
     {{- end }}
   {{- end }}
 
-  <!-- Hero -->
-  <section class="container-fluid" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
-    <div class="container py-5">
-      <div class="row justify-content-center">
-        <div class="col-12 col-lg-9 text-center">
-          <h1 class="display-5 text-dark mb-3">Does this sound familiar?</h1>
-          <p class="lead text-muted">
-            If you are running SAFe and it is not delivering what you were promised, you have probably been told you are not implementing it well enough. The evidence points somewhere else.
-          </p>
-        </div>
-      </div>
+  {{- $guideURL := relURL "safe-decision-makers/" }}
+
+  <!-- Masthead -->
+  <section class="home-hero">
+    <div class="container">
+      <p class="wrapper-eyebrow">An independent, community-curated review of the evidence</p>
+      <h1 class="home-title">Does this sound familiar?</h1>
+      <p class="home-lede">
+        If you are running SAFe and it is not delivering what you were promised, you have probably been told you are not
+        implementing it well enough. The evidence points somewhere else.
+      </p>
     </div>
   </section>
 
   <!-- Symptoms -->
-  <section class="container py-5">
-    <div class="row justify-content-center">
-      <div class="col-12 col-lg-10">
-        <div class="row g-3">
-          {{- $symptoms := slice
-            (dict "text" "Planning has become presentational. The real coordination happens somewhere else." "anchor" "volvo-cars" "who" "Volvo Cars")
-            (dict "text" "Work spills from one iteration to the next, and the spill keeps growing." "anchor" "beijer-electronics" "who" "Beijer Electronics")
-            (dict "text" "The time between deciding something and a customer having it is measured in quarters." "anchor" "peaksys" "who" "Peaksys")
-            (dict "text" "Dependencies are scheduled around rather than removed." "anchor" "mary-poppendieck" "who" "Mary Poppendieck")
-            (dict "text" "Everyone has been trained and certified, and nothing moves faster." "anchor" "capital-one" "who" "Capital One")
-            (dict "text" "It seemed to be working for the first few months, and then it stopped." "anchor" "al-shalloway-former-safe-principal-contributor-and-trainer-spct" "who" "Al Shalloway, original SAFe Principal Contributor")
-          }}
-          {{- range $symptoms }}
-            <div class="col-12 col-md-6">
-              <div class="h-100 p-3 rounded border bg-white">
-                <p class="mb-2 text-dark">{{ .text }}</p>
-                <a class="small text-decoration-none" href="{{ relURL "safe-decision-makers/" }}#{{ .anchor }}">{{ .who }} &rarr;</a>
-              </div>
-            </div>
-          {{- end }}
-        </div>
-      </div>
-    </div>
+  <section class="container">
+    <ul class="symptom-list">
+      {{- $symptoms := slice
+        (dict "claim" "Planning has become presentational. The real coordination happens somewhere else." "anchor" "volvo-cars" "who" "Volvo Cars")
+        (dict "claim" "Work spills from one iteration to the next, and the spill keeps growing." "anchor" "beijer-electronics" "who" "Beijer Electronics")
+        (dict "claim" "The time between deciding something and a customer having it is measured in quarters." "anchor" "peaksys" "who" "Peaksys")
+        (dict "claim" "Dependencies are scheduled around rather than removed." "anchor" "mary-poppendieck" "who" "Mary Poppendieck")
+        (dict "claim" "Everyone has been trained and certified, and nothing moves faster." "anchor" "capital-one" "who" "Capital One")
+        (dict "claim" "It seemed to be working for the first few months, and then it stopped." "anchor" "al-shalloway-former-safe-principal-contributor-and-trainer-spct" "who" "Al Shalloway, original SAFe Principal Contributor")
+      }}
+      {{- range $symptoms }}
+        <li class="symptom">
+          <span class="symptom-claim">{{ .claim }}</span>
+          <a class="symptom-src" href="{{ $guideURL }}#{{ .anchor }}">{{ .who }}</a>
+        </li>
+      {{- end }}
+    </ul>
   </section>
 
   <!-- The turn -->
-  <section class="container-fluid py-5" style="background-color: #135289;">
+  <section class="turn">
     <div class="container">
-      <div class="row justify-content-center text-center">
-        <div class="col-12 col-lg-9">
-          <h2 class="text-white mb-3">It isn&rsquo;t failing. This is what it does.</h2>
-          <p class="lead text-on-brand mb-4">
-            {{ with $caseCount }}Across {{ . }} organisations{{ else }}Across the organisations{{ end }} &mdash; a Swedish manufacturer, a French marketplace, an Australian bank, a car maker, a global consultancy, the United States Air Force &mdash; different sectors, different countries, different levels of capability, and the same shape of outcome.
-          </p>
-          <p class="text-on-brand mb-0">When a result is that consistent across that much variation, it is a property of the system, not of the people running it.</p>
+      <h2 class="turn-head">It isn&rsquo;t failing. This is what it does.</h2>
+      <p class="turn-body">
+        {{ with $caseCount }}Across {{ . }} organisations{{ else }}Across the organisations{{ end }} &mdash; a Swedish
+        manufacturer, a French marketplace, an Australian bank, a car maker, a global consultancy, the United States Air
+        Force &mdash; different sectors, different countries, different levels of capability, and the same shape of outcome.
+      </p>
+      <p class="turn-body turn-body-quiet">
+        When a result is that consistent across that much variation, it is a property of the system, not of the people
+        running it.
+      </p>
+    </div>
+  </section>
+
+  <!-- Conclusions -->
+  <section class="container">
+    <div class="findings">
+      <h2 class="section-head">What the evidence adds up to</h2>
+      {{- if $conclusions }}
+        <p class="findings-intro">
+          No single case study or expert opinion settles anything on its own. Taken together, the guide finds that
+          adoptions of SAFe tend to:
+        </p>
+        <ol class="findings-list">
+          {{- range $conclusions }}
+            <li>{{ . | markdownify }}</li>
+          {{- end }}
+        </ol>
+      {{- end }}
+      <p class="findings-src">
+        <a href="{{ $guideURL }}#general-conclusions">Read the conclusions in the guide &rarr;</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Evidence scale -->
+  <section class="container">
+    <div class="evidence-strip">
+      {{- with $caseCount }}
+        <div class="evidence-item">
+          <span class="evidence-figure">{{ . }}</span>
+          <span class="evidence-label">case studies, selected for independent verifiability</span>
         </div>
+      {{- end }}
+      {{- with $sourceCount }}
+        <div class="evidence-item">
+          <span class="evidence-figure">{{ . }}</span>
+          <span class="evidence-label">cited sources, every claim traceable</span>
+        </div>
+      {{- end }}
+      <div class="evidence-item">
+        <span class="evidence-figure">8</span>
+        <span class="evidence-label">Agile Manifesto signatories, alongside former SAFe Principal Contributors and the authors of the practices SAFe assembles</span>
       </div>
     </div>
   </section>
 
   <!-- Not about the people -->
-  <section class="container py-4">
-    <div class="row justify-content-center">
-      <div class="col-12 col-lg-9">
-        <div class="p-4 rounded" style="background: linear-gradient(45deg, #fff3cd 0%, #f8f9fa 100%);">
-          <h3 class="h5 text-primary mb-2"><i class="fa-solid fa-compass me-2"></i>This is about the framework, not the people</h3>
-          <p class="mb-2 text-dark">The guide is explicit that its argument is with SAFe, and not with the coaches and trainers who teach it &mdash; many of whom it describes as capable, respected professionals. Scaled Agile Inc. is invited to respond.</p>
-          <a href="{{ relURL "safe-decision-makers/" }}#a-message-to-safe-coaches--scaled-agile-inc">Read the message in full &rarr;</a>
-          &middot;
-          <a href="{{ relURL "right-of-reply/" }}">Right of reply &rarr;</a>
-        </div>
-      </div>
+  <section class="container">
+    <div class="editor-note">
+      <span class="editor-label">Before you read further</span>
+      <p>
+        The guide&rsquo;s argument is with SAFe, and not with the coaches and trainers who teach it &mdash; many of whom it
+        describes as capable, respected professionals. Scaled Agile Inc. is invited to respond, and any response is
+        published unedited.
+      </p>
+      <p class="editor-links">
+        <a href="{{ $guideURL }}#a-message-to-safe-coaches--scaled-agile-inc">The message in full &rarr;</a>
+        <a href="{{ relURL "right-of-reply/" }}">Right of reply &rarr;</a>
+      </p>
     </div>
   </section>
 
-  <!-- What the evidence says -->
-  <section class="container py-5">
-    <div class="row justify-content-center g-4">
-      <div class="col-12 col-lg-7">
-        <div class="card h-100 shadow-sm border-0">
-          <div class="card-body p-4">
-            <h3 class="h5 text-primary mb-3">What the evidence adds up to</h3>
-            {{- if $conclusions }}
-              <p class="text-muted">No single case study or expert opinion settles anything on its own. Taken together, the guide finds that adoptions of SAFe tend to:</p>
-              <ul class="text-dark">
-                {{- range $conclusions }}
-                  <li class="mb-2">{{ . | markdownify }}</li>
-                {{- end }}
-              </ul>
-            {{- end }}
-            <a class="btn btn-primary mt-2" href="{{ relURL "safe-decision-makers/" }}#general-conclusions">Read the conclusions &rarr;</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-lg-5">
-        <div class="card h-100 shadow-sm border-0" style="background-color: #f8f9fa;">
-          <div class="card-body p-4">
-            <h3 class="h5 text-primary mb-3">What it is built on</h3>
-            <ul class="list-unstyled mb-4">
-              {{- with $caseCount }}
-                <li class="mb-2"><strong class="fs-4">{{ . }}</strong> case studies, selected for independent verifiability</li>
-              {{- end }}
-              {{- with $sourceCount }}
-                <li class="mb-2"><strong class="fs-4">{{ . }}</strong> cited sources</li>
-              {{- end }}
-              <li class="mb-2">Former SAFe Principal Contributors, the authors of the practices SAFe assembles, and eight signatories of the Agile Manifesto</li>
-            </ul>
-            <a class="btn btn-outline-secondary" href="{{ relURL "safe-decision-makers/" }}#appendix-1---sources">See the sources &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
+  <!-- Doors -->
+  <section class="container">
+    <h2 class="section-head">Where to start</h2>
+    <ul class="doors">
+      <li class="door">
+        <a href="{{ relURL "getting-out/" }}">
+          <span class="door-who">We are already running it</span>
+          <span class="door-what">What you are seeing, what other organisations did next, and how they explained the decision.</span>
+          <span class="door-go">Getting out &rarr;</span>
+        </a>
+      </li>
+      <li class="door">
+        <a href="{{ relURL "brief/" }}">
+          <span class="door-who">I need to show someone</span>
+          <span class="door-what">One page, in the terms a board measures. Every claim sourced.</span>
+          <span class="door-go">What it cost &rarr;</span>
+        </a>
+      </li>
+      <li class="door">
+        <a href="{{ relURL "objections/" }}">
+          <span class="door-who">We are being sold it</span>
+          <span class="door-what">The five defences you will hear in the room, and what the evidence says about each.</span>
+          <span class="door-go">But what about&hellip;? &rarr;</span>
+        </a>
+      </li>
+    </ul>
   </section>
 
-  <!-- Where to go -->
-  <section class="container pb-5">
-    <div class="row justify-content-center g-3">
-      <div class="col-12 col-md-4">
-        <div class="card h-100 border-0 shadow-sm">
-          <div class="card-body text-center p-4 d-flex flex-column">
-            <h3 class="h6 text-dark mb-2">We are already running it</h3>
-            <p class="small text-muted flex-grow-1">What you are seeing, what other organisations did next, and how they explained the decision.</p>
-            <a class="btn btn-outline-primary btn-sm" href="{{ relURL "getting-out/" }}">Getting out &rarr;</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4">
-        <div class="card h-100 border-0 shadow-sm">
-          <div class="card-body text-center p-4 d-flex flex-column">
-            <h3 class="h6 text-dark mb-2">I need to show someone</h3>
-            <p class="small text-muted flex-grow-1">One page, in the terms a board measures. Every claim sourced.</p>
-            <a class="btn btn-outline-primary btn-sm" href="{{ relURL "brief/" }}">What it cost &rarr;</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4">
-        <div class="card h-100 border-0 shadow-sm">
-          <div class="card-body text-center p-4 d-flex flex-column">
-            <h3 class="h6 text-dark mb-2">We are being sold it</h3>
-            <p class="small text-muted flex-grow-1">The five defences you will hear in the room, and what the evidence says about each.</p>
-            <a class="btn btn-outline-primary btn-sm" href="{{ relURL "objections/" }}">But what about&hellip;? &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- The guide itself -->
-  <section class="container-fluid py-5" style="background-color: #f8f9fa;">
+  <!-- The source -->
+  <section class="source-block">
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-12 text-center mb-4">
-          <h2 class="h3 text-dark">The guide</h2>
-          <p class="text-muted mb-0">Everything above is a summary. This is the source.</p>
-        </div>
-      </div>
-      <div class="row justify-content-center">
-        {{ $sections := .Site.Sections }}
-        {{ range .Site.Home.Translations }}
-          {{ $sections = $sections | lang.Merge .Site.Sections }}
-        {{ end }}
-        {{- range $sections.ByWeight }}
-          <div class="col-12 col-lg-10 p-3">
-            <div class="card h-100 shadow-sm border-0 bg-white">
-              <div class="card-header bg-white border-0 text-center py-3">
-                <h3 class="h5 card-title mb-2 text-dark">{{ .Params.short_title | default .Title }}</h3>
-                <div class="mx-auto rounded" style="height: 4px; width: 60px; background-color: {{ .Params.brand.bg_colour | default "#135289" }};"></div>
-              </div>
-              <div class="card-body d-flex flex-column p-4">
-                <p class="flex-grow-1 text-muted">{{ .Params.which_to_use_summary | markdownify }}</p>
-
-                <div class="d-flex flex-wrap gap-2 justify-content-center py-3">
-                  <a href="{{ partial "functions/safe-page-link.html" .Path }}" class="btn btn-primary btn-sm px-3">
-                    <i class="fa-solid fa-book-open me-2"></i>{{ i18n "read_online_button" }}
-                  </a>
-                  <a href="{{ partial "functions/safe-page-link.html" (path.Join .Path "translations") }}" class="btn btn-outline-secondary btn-sm px-3">
-                    <i class="fa-solid fa-globe me-2"></i>{{ i18n "translations_button" }}
-                  </a>
-                  <a href="{{ partial "functions/safe-page-link.html" (path.Join .Path "history") }}" class="btn btn-outline-secondary btn-sm px-3">
-                    <i class="fa-solid fa-clock-rotate-left me-2"></i>{{ i18n "history_button" }}
-                  </a>
-                </div>
-
-                {{- if .Params.guide_comparison }}
-                  <div class="mt-3 p-3 rounded" style="background-color: #f8f9fa;">
-                    <h4 class="h6 text-primary mb-3 fw-bold text-center"><i class="fa-solid fa-list-check me-2"></i>{{ i18n "at_a_glance_title" . }}</h4>
-                    <div class="small">
-                      <div class="row mb-2">
-                        <div class="col-5 text-end fw-semibold text-secondary">Best for:</div>
-                        <div class="col-7 text-dark">{{ .Params.guide_comparison.audience }}</div>
-                      </div>
-                      <div class="row mb-2">
-                        <div class="col-5 text-end fw-semibold text-secondary">Purpose:</div>
-                        <div class="col-7 text-dark">{{ .Params.guide_comparison.purpose }}</div>
-                      </div>
-                      <div class="row mb-2">
-                        <div class="col-5 text-end fw-semibold text-secondary">Approach:</div>
-                        <div class="col-7 text-dark">{{ .Params.guide_comparison.ethos }}</div>
-                      </div>
-                      <div class="row mb-0">
-                        <div class="col-5 text-end fw-semibold text-secondary">Content:</div>
-                        <div class="col-7 text-dark">{{ .Params.guide_comparison.content }}</div>
-                      </div>
-                    </div>
-                  </div>
-                {{- end }}
-              </div>
-            </div>
-          </div>
+      <p class="wrapper-eyebrow">Everything above is a summary</p>
+      {{- range (where site.Sections "Type" "guide") }}
+        <h2 class="source-title">{{ .Params.short_title | default .Title }}</h2>
+        <p class="source-desc">{{ .Params.which_to_use_summary | markdownify }}</p>
+      {{- end }}
+      <p class="source-actions">
+        <a class="source-primary" href="{{ $guideURL }}">Read the guide</a>
+        {{- with $guide }}
+          <span class="source-meta">Edition {{ .Params.version }} &middot; CC BY-SA 4.0</span>
         {{- end }}
-      </div>
+      </p>
 
-      <!-- Contributors -->
-      <div class="row justify-content-center">
-        <div class="col-12 col-lg-10">
-          <div class="card border-0 shadow-sm">
-            <div class="card-body text-center p-4">
-              <h3 class="h5 text-primary mb-3"><i class="fa-solid fa-users me-2"></i>{{ i18n "contributors_title" | default "Contributors" }}</h3>
-              <p class="small text-muted">{{ i18n "contributors_description" . }}</p>
-              {{- range $sections.ByWeight }}
-                {{- $contributors := partial "functions/get-contributors.html" . -}}
-                {{- $contributors = where $contributors "role" "in" (slice "contributor" "creator") -}}
-                {{- if $contributors -}}
-                  <div class="d-flex flex-wrap justify-content-center gap-2">
-                    {{ range sort $contributors "weight" "asc" }}
-                      {{ partial "components/guide/guide-author.html" . }}
-                    {{ end }}
-                  </div>
-                {{- end -}}
-              {{- end }}
-              <a class="btn btn-link btn-sm mt-3" href="{{ relURL "about/" }}">About this site &rarr;</a>
+      {{- range (where site.Sections "Type" "guide") }}
+        {{- $contributors := partial "functions/get-contributors.html" . -}}
+        {{- $contributors = where $contributors "role" "in" (slice "contributor" "creator") -}}
+        {{- if $contributors -}}
+          <div class="source-people">
+            <span class="evidence-label">Curated and contributed to by</span>
+            <div class="source-avatars">
+              {{ range sort $contributors "weight" "asc" }}
+                {{ partial "components/guide/guide-author.html" . }}
+              {{ end }}
             </div>
           </div>
-        </div>
-      </div>
+        {{- end -}}
+      {{- end }}
+      <p class="source-about"><a href="{{ relURL "about/" }}">About this site &rarr;</a></p>
     </div>
   </section>
-
-  {{- with $guide }}
-    <section class="container py-4">
-      <div class="row justify-content-center">
-        <div class="col-12 col-lg-9 text-center">
-          <p class="small text-muted mb-0">
-            <em>The summaries on this site are derived from the {{ .Params.version }} edition of the guide. The guide is the source; where they differ, the guide is correct.</em>
-          </p>
-        </div>
-      </div>
-    </section>
-  {{- end }}
 {{- end }}
