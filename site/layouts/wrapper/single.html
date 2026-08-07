@@ -1,0 +1,29 @@
+{{/*
+  Layout for wrapper pages (type: wrapper).
+
+  These are the summary pages around the guide — not the guide itself.
+  This path does not exist in the HugoGuides module, so nothing is overridden.
+  The module's own single.html is a placeholder stub and does not render content.
+*/}}
+{{- define "main" }}
+  <article class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-9">
+        <header class="mb-4 pb-3 border-bottom">
+          <h1 class="display-6 text-dark mb-2">{{ .Title }}</h1>
+          {{- with .Description }}
+            <p class="lead text-muted mb-0">{{ . }}</p>
+          {{- end }}
+        </header>
+
+        <div class="wrapper-content">
+          {{ .Content }}
+        </div>
+      </div>
+    </div>
+  </article>
+{{- end }}
+
+{{- define "template" }}
+  wrapper/single.html
+{{- end }}

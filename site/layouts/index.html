@@ -1,39 +1,212 @@
 {{- define "main" }}
-  <!-- Hero Section with lighter background -->
-  <section class="section container-fluid" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+  {{/*
+    Home page.
+
+    Everything factual on this page is derived from the guide at build time —
+    counts, conclusions and links. Nothing is hand-copied from it. If you need a
+    new fact here, extract it below rather than typing it in the markup.
+    See CLAUDE.md.
+  */}}
+
+  {{- $guide := site.GetPage "/safe-decision-makers/2024.8" }}
+  {{- $raw := "" }}
+  {{- $caseCount := 0 }}
+  {{- $sourceCount := 0 }}
+  {{- $conclusions := slice }}
+
+  {{- with $guide }}
+    {{- $raw = .RawContent }}
+
+    {{/* Case studies: count H3s in the Case studies section, less its Conclusions heading. */}}
+    {{- with findRE `(?s)## Case studies.*?\n## SAFe experts` $raw 1 }}
+      {{- $caseCount = sub (len (findRE `(?m)^### ` (index . 0))) 1 }}
+    {{- end }}
+
+    {{/* Sources: linked bullets in Appendix 1. */}}
+    {{- with findRE `(?s)# Appendix 1 - Sources.*?\n# Appendix 2` $raw 1 }}
+      {{- $sourceCount = len (findRE `(?m)^- \[` (index . 0)) }}
+    {{- end }}
+
+    {{/* The three general conclusions, as written in the guide. */}}
+    {{- with findRE `(?s)# General conclusions.*?\n# ` $raw 1 }}
+      {{- range findRE `(?m)^- .+$` (index . 0) }}
+        {{- $conclusions = $conclusions | append (strings.TrimPrefix "- " .) }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+
+  <!-- Hero -->
+  <section class="container-fluid" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
     <div class="container py-5">
       <div class="row justify-content-center">
-        <div class="col-12 text-center mb-5">
-          <h1 class="display-4 text-dark mb-4">{{ .Site.Title }}</h1>
-          <h2 class="display-8 text-dark mb-4">Information for decision-makers considering the SAFe framework</h2>
-          <p class="lead text-muted fs-5">Curated review of facts, evidence, and opinions from relevant sources without vested interests, to help decision-makers make informed choices and get better results</p>
+        <div class="col-12 col-lg-9 text-center">
+          <h1 class="display-5 text-dark mb-3">Does this sound familiar?</h1>
+          <p class="lead text-muted">
+            If you are running SAFe and it is not delivering what you were promised, you have probably been told you are not implementing it well enough. The evidence points somewhere else.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Symptoms -->
+  <section class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10">
+        <div class="row g-3">
+          {{- $symptoms := slice
+            (dict "text" "Planning has become presentational. The real coordination happens somewhere else." "anchor" "volvo-cars" "who" "Volvo Cars")
+            (dict "text" "Work spills from one iteration to the next, and the spill keeps growing." "anchor" "beijer-electronics" "who" "Beijer Electronics")
+            (dict "text" "The time between deciding something and a customer having it is measured in quarters." "anchor" "peaksys" "who" "Peaksys")
+            (dict "text" "Dependencies are scheduled around rather than removed." "anchor" "mary-poppendieck" "who" "Mary Poppendieck")
+            (dict "text" "Everyone has been trained and certified, and nothing moves faster." "anchor" "capital-one" "who" "Capital One")
+            (dict "text" "It seemed to be working for the first few months, and then it stopped." "anchor" "al-shalloway-former-safe-principal-contributor-and-trainer-spct" "who" "Al Shalloway, original SAFe Principal Contributor")
+          }}
+          {{- range $symptoms }}
+            <div class="col-12 col-md-6">
+              <div class="h-100 p-3 rounded border bg-white">
+                <p class="mb-2 text-dark">{{ .text }}</p>
+                <a class="small text-decoration-none" href="{{ relURL "safe-decision-makers/" }}#{{ .anchor }}">{{ .who }} &rarr;</a>
+              </div>
+            </div>
+          {{- end }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The turn -->
+  <section class="container-fluid py-5" style="background-color: #135289;">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col-12 col-lg-9">
+          <h2 class="text-white mb-3">It isn&rsquo;t failing. This is what it does.</h2>
+          <p class="lead text-white-50 mb-4">
+            {{ with $caseCount }}Across {{ . }} organisations{{ else }}Across the organisations{{ end }} &mdash; a Swedish manufacturer, a French marketplace, an Australian bank, a car maker, a global consultancy, the United States Air Force &mdash; different sectors, different countries, different levels of capability, and the same shape of outcome.
+          </p>
+          <p class="text-white-50 mb-0">When a result is that consistent across that much variation, it is a property of the system, not of the people running it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Not about the people -->
+  <section class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-9">
+        <div class="p-4 rounded" style="background: linear-gradient(45deg, #fff3cd 0%, #f8f9fa 100%);">
+          <h3 class="h5 text-primary mb-2"><i class="fa-solid fa-compass me-2"></i>This is about the framework, not the people</h3>
+          <p class="mb-2 text-dark">The guide is explicit that its argument is with SAFe, and not with the coaches and trainers who teach it &mdash; many of whom it describes as capable, respected professionals. Scaled Agile Inc. is invited to respond.</p>
+          <a href="{{ relURL "safe-decision-makers/" }}#a-message-to-safe-coaches--scaled-agile-inc">Read the message in full &rarr;</a>
+          &middot;
+          <a href="{{ relURL "right-of-reply/" }}">Right of reply &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What the evidence says -->
+  <section class="container py-5">
+    <div class="row justify-content-center g-4">
+      <div class="col-12 col-lg-7">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body p-4">
+            <h3 class="h5 text-primary mb-3">What the evidence adds up to</h3>
+            {{- if $conclusions }}
+              <p class="text-muted">No single case study or expert opinion settles anything on its own. Taken together, the guide finds that adoptions of SAFe tend to:</p>
+              <ul class="text-dark">
+                {{- range $conclusions }}
+                  <li class="mb-2">{{ . | markdownify }}</li>
+                {{- end }}
+              </ul>
+            {{- end }}
+            <a class="btn btn-primary mt-2" href="{{ relURL "safe-decision-makers/" }}#general-conclusions">Read the conclusions &rarr;</a>
+          </div>
         </div>
       </div>
 
-      <!-- Guide Cards with lighter design -->
-      <div class="row">
+      <div class="col-12 col-lg-5">
+        <div class="card h-100 shadow-sm border-0" style="background-color: #f8f9fa;">
+          <div class="card-body p-4">
+            <h3 class="h5 text-primary mb-3">What it is built on</h3>
+            <ul class="list-unstyled mb-4">
+              {{- with $caseCount }}
+                <li class="mb-2"><strong class="fs-4">{{ . }}</strong> case studies, selected for independent verifiability</li>
+              {{- end }}
+              {{- with $sourceCount }}
+                <li class="mb-2"><strong class="fs-4">{{ . }}</strong> cited sources</li>
+              {{- end }}
+              <li class="mb-2">Former SAFe Principal Contributors, the authors of the practices SAFe assembles, and eight signatories of the Agile Manifesto</li>
+            </ul>
+            <a class="btn btn-outline-secondary" href="{{ relURL "safe-decision-makers/" }}#appendix-1---sources">See the sources &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Where to go -->
+  <section class="container pb-5">
+    <div class="row justify-content-center g-3">
+      <div class="col-12 col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body text-center p-4 d-flex flex-column">
+            <h3 class="h6 text-dark mb-2">We are already running it</h3>
+            <p class="small text-muted flex-grow-1">What you are seeing, what other organisations did next, and how they explained the decision.</p>
+            <a class="btn btn-outline-primary btn-sm" href="{{ relURL "getting-out/" }}">Getting out &rarr;</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body text-center p-4 d-flex flex-column">
+            <h3 class="h6 text-dark mb-2">I need to show someone</h3>
+            <p class="small text-muted flex-grow-1">One page, in the terms a board measures. Every claim sourced.</p>
+            <a class="btn btn-outline-primary btn-sm" href="{{ relURL "brief/" }}">What it cost &rarr;</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body text-center p-4 d-flex flex-column">
+            <h3 class="h6 text-dark mb-2">We are being sold it</h3>
+            <p class="small text-muted flex-grow-1">The five defences you will hear in the room, and what the evidence says about each.</p>
+            <a class="btn btn-outline-primary btn-sm" href="{{ relURL "objections/" }}">But what about&hellip;? &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The guide itself -->
+  <section class="container-fluid py-5" style="background-color: #f8f9fa;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 text-center mb-4">
+          <h2 class="h3 text-dark">The guide</h2>
+          <p class="text-muted mb-0">Everything above is a summary. This is the source.</p>
+        </div>
+      </div>
+      <div class="row justify-content-center">
         {{ $sections := .Site.Sections }}
         {{ range .Site.Home.Translations }}
           {{ $sections = $sections | lang.Merge .Site.Sections }}
         {{ end }}
-        {{/* {{ $sections = lang.Merge $defaultSite.sections $sections }} */}}
         {{- range $sections.ByWeight }}
-          <div class="col-12 col-lg-12 col-xl-12 p-3">
-            <div class="card h-100 shadow-sm border-0" style="background: #ffffff;">
+          <div class="col-12 col-lg-10 p-3">
+            <div class="card h-100 shadow-sm border-0 bg-white">
               <div class="card-header bg-white border-0 text-center py-3">
-                <h5 class="card-title mb-2 text-dark">{{ .Params.short_title | default .Title }}</h5>
+                <h3 class="h5 card-title mb-2 text-dark">{{ .Params.short_title | default .Title }}</h3>
                 <div class="mx-auto rounded" style="height: 4px; width: 60px; background-color: {{ .Params.brand.bg_colour | default "#135289" }};"></div>
               </div>
               <div class="card-body d-flex flex-column p-4">
                 <p class="flex-grow-1 text-muted">{{ .Params.which_to_use_summary | markdownify }}</p>
 
-                <!-- Action buttons with more inviting design -->
                 <div class="d-flex flex-wrap gap-2 justify-content-center py-3">
-                  {{- $latestVersion := partial "functions/get-latest-version" . }}
                   <a href="{{ partial "functions/safe-page-link.html" .Path }}" class="btn btn-primary btn-sm px-3">
                     <i class="fa-solid fa-book-open me-2"></i>{{ i18n "read_online_button" }}
                   </a>
-                  <a href="{{ partial "functions/safe-page-link.html"  (path.Join .Path "translations") }}" class="btn btn-outline-secondary btn-sm px-3">
+                  <a href="{{ partial "functions/safe-page-link.html" (path.Join .Path "translations") }}" class="btn btn-outline-secondary btn-sm px-3">
                     <i class="fa-solid fa-globe me-2"></i>{{ i18n "translations_button" }}
                   </a>
                   <a href="{{ partial "functions/safe-page-link.html" (path.Join .Path "history") }}" class="btn btn-outline-secondary btn-sm px-3">
@@ -41,12 +214,11 @@
                   </a>
                 </div>
 
-                <!-- Comparison details with better visual hierarchy -->
                 {{- if .Params.guide_comparison }}
                   <div class="mt-3 p-3 rounded" style="background-color: #f8f9fa;">
-                    <h6 class="text-primary mb-3 fw-bold text-center"><i class="fa-solid fa-list-check me-2"></i>{{ i18n "at_a_glance_title" . }}</h6>
+                    <h4 class="h6 text-primary mb-3 fw-bold text-center"><i class="fa-solid fa-list-check me-2"></i>{{ i18n "at_a_glance_title" . }}</h4>
                     <div class="small">
-                       <div class="row mb-2">
+                      <div class="row mb-2">
                         <div class="col-5 text-end fw-semibold text-secondary">Best for:</div>
                         <div class="col-7 text-dark">{{ .Params.guide_comparison.audience }}</div>
                       </div>
@@ -71,128 +243,41 @@
         {{- end }}
       </div>
 
-      <!-- Executive Summary and Trends Section -->
-      <div class="row justify-content-center mt-5 mb-4 g-3">
-        <!-- Left Column: Executive Summary -->
-        <div class="col-12 col-lg-6">
-          <div class="card shadow-sm border-0 h-100" style="background: linear-gradient(45deg, #f0f9ff 0%, #f8f9fa 100%);">
-            <div class="card-header bg-transparent border-0 text-center py-3">
-              <h3 class="card-title mb-0 text-primary">
-                <i class="fa-solid fa-question-circle me-2"></i>
-                Executive Summary
-              </h3>
-            </div>
-            <div class="card-body px-4 pb-4">
-              <div class="text-muted">
-                <p class="lead">Individually, no single expert opinion, case study, or practitioner insight provides a definitive conclusion. However, taken together, the evidence points to consistent patterns in SAFe implementations:</p>
-                <ul>
-                  <li><strong>Miss key elements of effective Agile practice</strong>, undermining true organisational agility</li>
-                  <li><strong>Reinforce legacy behaviours and inefficiencies</strong> commonly associated with pre-Agile models</li>
-                  <li><strong>Invest heavily in learning and scaling suboptimal practices</strong>, often settling for outdated or second-best approaches</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Column: Observed Trends -->
-        <div class="col-12 col-lg-6">
-          <div class="card shadow-sm border-0 h-100" style="background: linear-gradient(45deg, #fff5f5 0%, #f8f9fa 100%);">
-            <div class="card-header bg-transparent border-0 text-center py-3">
-              <h3 class="card-title mb-0 text-primary fw-bold">
-                <i class="fa-solid fa-chart-line me-2"></i>
-                Observed Trends in SAFe Adoption
-              </h3>
-            </div>
-            <div class="card-body px-4 pb-4">
-              <p>While SAFe adoption and market presence continue to grow, several countervailing signals are emerging from the Agile community and industry observers:</p>
-              <ul>
-                <li><strong>Agile professionals, including SAFe-certified individuals, are increasingly declining SAFe-related roles</strong>, citing prior negative experiences. This is now reflected in candidate preferences during recruitment.</li>
-                <li><strong>Public criticism from experienced Agile practitioners is becoming more frequent</strong>, with growing scepticism expressed in professional forums and events.</li>
-                <li><strong>Executives and former employees are sharing case studies of stalled, abandoned, or troubled SAFe adoptions</strong>, often citing rigid structures or failure to deliver expected outcomes.</li>
-                <li><strong>Online content highlighting failed or problematic SAFe implementations is increasing</strong>, including posts, blogs, and industry articles.</li>
-                <li><strong>More organisations are requesting framework-agnostic Agile expertise</strong>, valuing adaptability over adherence to a specific scaled model.</li>
-              </ul>
-              <p>It remains unclear whether these signals reflect typical growing pains, implementation quality, SAFe itself, or a broader shift in expectations around Agile at scale.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-lg-6">
-          <div class="card shadow-sm border-0 h-100" style="background: linear-gradient(45deg, #e3f2fd 0%, #f8f9fa 100%);">
-            <div class="card-header bg-transparent border-0 text-center py-3">
-              <h3 class="card-title mb-0 text-primary">
-                <i class="fa-solid fa-users me-2"></i>
-                {{ i18n "open_source_title" }}
-              </h3>
-            </div>
-            <div class="card-body text-center px-4 pb-4 d-flex flex-column">
-              <p class="card-text text-muted mb-2">
-                Many of the larger companies and novice practitioners look at the marketing from SAFe, and they don’t know if they can trust it or not. In this document members of the Agile community are collecting available information including on these
-                marketing stories. Some practitioners have been there and know the difference between marketing and real stories, others know not only how things started yet also how things are going now.
-              </p>
-              <div class="mt-auto">
-                <a href="https://groups.google.com/g/agileinformeddecisionmaking" class="btn btn-primary btn-lg px-4 mb-2" target="_blank">
-                  <i class="fa-solid fa-comments me-2"></i>{{ i18n "join_discussion_button" }}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-lg-6">
-          <div class="card shadow-sm border-0 h-100" style="background: linear-gradient(45deg, #e3f2fd 0%, #f8f9fa 100%);">
-            <div class="card-header bg-transparent border-0 text-center py-3">
-              <h3 class="card-title mb-0 text-primary">
-                <i class="fa-solid fa-users me-2"></i>
-                {{ i18n "contributors_title" | default "Contributors" }}
-              </h3>
-            </div>
-            <div class="card-body text-center px-4 pb-4 d-flex flex-column">
-              <h6 class="text-primary mb-3 fw-bold"></h6>
+      <!-- Contributors -->
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body text-center p-4">
+              <h3 class="h5 text-primary mb-3"><i class="fa-solid fa-users me-2"></i>{{ i18n "contributors_title" | default "Contributors" }}</h3>
               <p class="small text-muted">{{ i18n "contributors_description" . }}</p>
-              {{ $sections := .Site.Sections }}
-              {{ range .Site.Home.Translations }}
-                {{ $sections = $sections | lang.Merge .Site.Sections }}
-              {{ end }}
               {{- range $sections.ByWeight }}
-                <h6 class="text-primary mb-3 fw-bold">{{ .Params.short_title | default .Title }}</h6>
-                <!-- Contributors Section -->
                 {{- $contributors := partial "functions/get-contributors.html" . -}}
                 {{- $contributors = where $contributors "role" "in" (slice "contributor" "creator") -}}
                 {{- if $contributors -}}
-                  <div class="mb-4">
-                    <div class="d-flex flex-wrap justify-content-center gap-2">
-                      {{ range sort $contributors "weight" "asc" }}
-                        {{ partial "components/guide/guide-author.html" . }}
-                      {{ end }}
-                    </div>
+                  <div class="d-flex flex-wrap justify-content-center gap-2">
+                    {{ range sort $contributors "weight" "asc" }}
+                      {{ partial "components/guide/guide-author.html" . }}
+                    {{ end }}
                   </div>
                 {{- end -}}
               {{- end }}
-            </div>
-          </div>
-        </div>
-
-        <div class="col-12 col-lg-12">
-          <div class="card shadow-sm border-0" style="background: linear-gradient(45deg, #fff3cd 0%, #f8f9fa 100%);">
-            <div class="card-header bg-transparent border-0 text-center py-3">
-              <h3 class="card-title mb-0 text-primary">
-                <i class="fa-solid fa-compass me-2"></i>
-                A message to SAFe Coaches &amp; Scaled Agile Inc.
-              </h3>
-            </div>
-            <div class="card-body text-center px-4 pb-4">
-              <div class="fs-6 text-dark">
-                <p>
-                  Many SAFe coaches and trainers are friends, respected co-workers, and competent Agile professionals. The content of this document is not intended as a reflection of their talent, professionalism and expertise, but as a reflection of the
-                  SAFe framework.
-                </p>
-                <p>Scaled Agile Inc. is invited to engage with the Agile community and is encouraged to act on the parts of the feedback that are constructive and useful.</p>
-              </div>
+              <a class="btn btn-link btn-sm mt-3" href="{{ relURL "about/" }}">About this site &rarr;</a>
             </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  {{- with $guide }}
+    <section class="container py-4">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-9 text-center">
+          <p class="small text-muted mb-0">
+            <em>The summaries on this site are derived from the {{ .Params.version }} edition of the guide. The guide is the source; where they differ, the guide is correct.</em>
+          </p>
+        </div>
+      </div>
+    </section>
+  {{- end }}
 {{- end }}

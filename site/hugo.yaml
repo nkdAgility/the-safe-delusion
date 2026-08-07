@@ -18,6 +18,27 @@ languages:
       description: SAFe Delusion is a community-driven resource that provides evidence-based insights and expert opinions on the SAFe framework, helping decision-makers make informed choices about Agile scaling.
       keywords: SAFe, Delusion, Agile, Framework, Decision-Makers
 
+# Top-level navigation
+# Rendered by layouts/_partials/components/main-menu.html, which overrides the
+# module partial of the same name because the module ships no menu implementation.
+menu:
+  main:
+    - name: "Home"
+      url: /
+      weight: 10
+    - name: "The Guide"
+      url: /safe-decision-makers/
+      weight: 20
+    - name: "Getting out"
+      url: /getting-out/
+      weight: 30
+    - name: "What it cost"
+      url: /brief/
+      weight: 40
+    - name: "But what about…?"
+      url: /objections/
+      weight: 50
+
 # Site-wide parameters
 params:
   description: "Information for decision-makers considering the SAFe framework - Curated review of facts, evidence, and opinions from relevant sources without vested interests, to help decision-makers make informed choices and get better results"
