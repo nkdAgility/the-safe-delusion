@@ -14,6 +14,13 @@
   {{- with .Get "who" }}<span class="sidenote-who">{{ . }}</span>{{ end -}}
   {{- with .Get "note" }}{{ . }} {{ end -}}
   {{- with .Get "anchor" }}
-    <a href="{{ relURL "safe-decision-makers/" }}#{{ . }}">Guide&nbsp;&rarr;</a>
+    {{/* The visible text is short by design, but every sidenote on a page would
+         otherwise expose an identical "Guide" link to a screen reader's link
+         list. The label names the source it points at. */}}
+    <a
+      href="{{ relURL "safe-decision-makers/" }}#{{ . }}"
+      aria-label="{{ printf "%s in the guide" ($.Get "who" | default "This source") }}"
+      >Guide&nbsp;&rarr;</a
+    >
   {{- end -}}
 </aside>

@@ -1,0 +1,27 @@
+{{/*
+  Skip-to-content link. Does not exist in the module, so overrides nothing.
+
+  Emitted from components/main-menu.html because the module's baseof.html has no
+  head or body-open hook, and main-menu is the earliest thing in <body> that this
+  site controls.
+
+  The module's <main> element carries no id, and baseof cannot be edited without
+  forking it, so the id is assigned on load. Wrapper pages set id="content"
+  themselves in layouts/wrapper/single.html, so those work without script; the
+  guide pages depend on the fallback below.
+*/}}
+<a class="skip-link" href="#content">Skip to content</a>
+<script>
+  (function () {
+    function tag() {
+      if (document.getElementById("content")) return;
+      var m = document.querySelector("main");
+      if (m) m.id = "content";
+    }
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", tag);
+    } else {
+      tag();
+    }
+  })();
+</script>
