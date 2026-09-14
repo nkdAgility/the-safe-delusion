@@ -15,6 +15,8 @@ sitemap:
   priority: 1.0
 guide_whatis: |
   Independent, evidence-based guide for decision-makers evaluating SAFe. Case studies, expert insights, and agile alternatives without vendor spin.
+aliases:
+  - /safe-decision-makers/latest
 ---
 
 We are uncovering better ways of working by doing it and helping others do it.
