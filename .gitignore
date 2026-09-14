@@ -5,3 +5,6 @@
 **/_gen/
 /resources/
 /.processing/
+
+/testResults.xml
+/.hugo_build.lock
