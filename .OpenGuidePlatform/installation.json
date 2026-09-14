@@ -1,54 +1,54 @@
 {
   "schemaVersion": 1,
   "kind": "preview-installation",
-  "releaseTag": "v0.5.3-Preview.6",
+  "releaseTag": "v0.5.4-Preview.1",
   "sourcePath": "site",
   "release": {
     "schemaVersion": 2,
     "product": "OpenGuidePlatform",
-    "version": "0.5.3-Preview.6",
-    "sourceCommit": "459773dee707ee854fbc864485aa8007a3a91c45",
+    "version": "0.5.4-Preview.1",
+    "sourceCommit": "77375f4c1196c6ed67c9923e42b2e6759aba43cb",
     "channel": "preview",
     "packages": {
       "GuideSite": {
         "archive": "OpenGuidePlatform-GuideSite.zip",
-        "version": "0.5.3-Preview.6",
-        "sha256": "dac2c66d3ca90508a94f57a63f531b8e2d32357b99a6f85715ad108824437bda",
+        "version": "0.5.4-Preview.1",
+        "sha256": "b43e1a277697cbe66ef591d639926c34be3739b118eef20e76101952d0d473fa",
         "components": {
-          "OpenGuidePlatform.Agents.Integration": "0.5.3-Preview.6",
-          "OpenGuidePlatform.Hugo.Guides": "0.5.3-Preview.6",
-          "OpenGuidePlatform.PowerShell.AgentControls": "0.5.3-Preview.6",
-          "OpenGuidePlatform.PowerShell.Core": "0.5.3-Preview.6",
-          "OpenGuidePlatform.PowerShell.GuideSiteAdoption": "0.5.3-Preview.6",
-          "OpenGuidePlatform.PowerShell.GuideSiteBuild": "0.5.3-Preview.6"
+          "OpenGuidePlatform.Agents.Integration": "0.5.4-Preview.1",
+          "OpenGuidePlatform.Hugo.Guides": "0.5.4-Preview.1",
+          "OpenGuidePlatform.PowerShell.AgentControls": "0.5.4-Preview.1",
+          "OpenGuidePlatform.PowerShell.Core": "0.5.4-Preview.1",
+          "OpenGuidePlatform.PowerShell.GuideSiteAdoption": "0.5.4-Preview.1",
+          "OpenGuidePlatform.PowerShell.GuideSiteBuild": "0.5.4-Preview.1"
         }
       },
       "PlatformBuild": {
         "archive": "OpenGuidePlatform-PlatformBuild.zip",
-        "version": "0.5.3-Preview.6",
-        "sha256": "ec08506a4eb30ab612f7ecf01820459aaa53bd5d76eb05ad2b338a587d8b7b2b",
+        "version": "0.5.4-Preview.1",
+        "sha256": "fb06a6f511eb4038ebe1067a6ed67bafd8ae3217e4ab103decb227dc3d54e8f9",
         "components": {
-          "OpenGuidePlatform.PowerShell.PlatformBuild": "0.5.3-Preview.6"
+          "OpenGuidePlatform.PowerShell.PlatformBuild": "0.5.4-Preview.1"
         },
         "dependencies": {
           "GuideSite": {
-            "version": "0.5.3-Preview.6",
-            "sha256": "dac2c66d3ca90508a94f57a63f531b8e2d32357b99a6f85715ad108824437bda"
+            "version": "0.5.4-Preview.1",
+            "sha256": "b43e1a277697cbe66ef591d639926c34be3739b118eef20e76101952d0d473fa"
           }
         }
       }
     },
     "nativeHugoModule": {
       "path": "github.com/nkdAgility/OpenGuidePlatform/system/OpenGuidePlatform.Hugo.Guides",
-      "version": "v0.5.3-Preview.6",
-      "tag": "system/OpenGuidePlatform.Hugo.Guides/v0.5.3-Preview.6",
-      "sourceCommit": "459773dee707ee854fbc864485aa8007a3a91c45"
+      "version": "v0.5.4-Preview.1",
+      "tag": "system/OpenGuidePlatform.Hugo.Guides/v0.5.4-Preview.1",
+      "sourceCommit": "77375f4c1196c6ed67c9923e42b2e6759aba43cb"
     },
     "workflow": {
       "repository": "nkdAgility/OpenGuidePlatform",
       "path": ".github/workflows/guide-site-build.yaml",
-      "version": "v0.5.3-Preview.6",
-      "sourceCommit": "459773dee707ee854fbc864485aa8007a3a91c45"
+      "version": "v0.5.4-Preview.1",
+      "sourceCommit": "77375f4c1196c6ed67c9923e42b2e6759aba43cb"
     },
     "requirements": {
       "powerShell": ">=7.4",
@@ -60,13 +60,13 @@
   "hugoResolution": "native-module",
   "nativeHugoModule": {
     "path": "github.com/nkdAgility/OpenGuidePlatform/system/OpenGuidePlatform.Hugo.Guides",
-    "version": "v0.5.3-Preview.6",
-    "tag": "system/OpenGuidePlatform.Hugo.Guides/v0.5.3-Preview.6",
-    "sourceCommit": "459773dee707ee854fbc864485aa8007a3a91c45"
+    "version": "v0.5.4-Preview.1",
+    "tag": "system/OpenGuidePlatform.Hugo.Guides/v0.5.4-Preview.1",
+    "sourceCommit": "77375f4c1196c6ed67c9923e42b2e6759aba43cb"
   },
   "nativeChecksums": {
-    "goModSum": "h1:rAE0g1D+UCeGL3BUQvtngp1S76QDcVozQoa9V8mAukg=",
-    "sum": "h1:ESYD70i8mGEjCjKvhSliQEGERq88UjgTbmmq8k8VRAA="
+    "sum": "h1:6uxnhPCzHkzENCyAiEQYtpJrbFnOn6wbp6JApKehuBU=",
+    "goModSum": "h1:rAE0g1D+UCeGL3BUQvtngp1S76QDcVozQoa9V8mAukg="
   },
   "adoptionBlockers": [
     "Coordinated agent controls and independent enforcement"
@@ -74,7 +74,7 @@
   "managedFiles": {
     "build.ps1": "1b39a7ec091a4e6b8d352a207a3532ca5bc6134cbb9eeb35d07954ec08779911",
     ".OpenGuidePlatform/Resolve-OpenGuidePlatform.ps1": "1682e09f9c0ac761ebdab898214b2104f54c671bf24927322fb85adf90f94351",
-    ".github/workflows/main.yaml": "0c824850b9570656bdc531edb1fa2716e002c697565a71453a82d32ccf780bb5",
+    ".github/workflows/main.yaml": "3cda18a551f2672bf2cabd2c0bfe0e9cfaea44f538eace48a59ab9511c56dab5",
     ".agents/skills/LICENSE.KanbanGuides": "bd8fd81ffc02d65bd6c31c30109aa6b4f3032b7da16e00fd1cb2769db987bde9",
     ".agents/skills/provenance.json": "bf86c144ca7cdeb2e19e4780d6237fb882bbe8acd31ff8af637d81c564d97117",
     ".agents/skills/USAGE.md": "c686c2e3320a1d7e8c97d16f3de0163eca789d568909ca3373a56ccdbdae850b",
