@@ -512,7 +512,7 @@ As SAFe has assembled a lot from the Agile community, this should be a long list
 
 Successful Agile adoptions or organisations that have successfully developed their technical, organisational and business agility with lasting benefits for their business, often present some common elements. These elements are listed below.
 
-[Appendix 3](#appendix---safe-alternatives-to-safe)
+[Appendix 3](#appendix-3---safe-alternatives-to-safe)
 
 Your chances of success are greatly increased by taking inspiration from these elements below:
 
