@@ -38,7 +38,7 @@ The workflow runs one Prepare → Build → Validate → Deploy → Verify chain
 
 - Pull requests: temporary canary sites; the deployment adds the actual URL to the PR.
 - Main: [preview site](https://purple-tree-00e22e403-preview.westeurope.5.azurestaticapps.net/).
-- Production: [safedelusion.com](https://safedelusion.com/), only when the version selects production.
+- Production: [safedelusion.com](https://safedelusion.com/), triggered by pushing a stable version tag such as `v1.2.3` or `1.2.3`. Tag a commit containing this workflow. Prepare uses GitVersion to select the ring; prerelease tags retain their corresponding preview or canary ring.
 
 Site-owned destinations are in `.OpenGuidePlatform/delivery.yaml`. Closing a PR removes its temporary deployment.
 
