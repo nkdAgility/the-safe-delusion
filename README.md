@@ -25,16 +25,16 @@ The full build runs Prepare, Build and Validate. Reports are written under `.pro
 On a review branch:
 
 ```powershell
-./build.ps1 Update -ring preview
+./build.ps1 Update -PlatformRelease v0.5.5
 ./build.ps1 -Target preview
 git diff
 ```
 
-This adoption uses the preview platform ring. Review updates before committing. The workflows and the final site-specific paragraph in `.agents/agents.md` are deliberate local customizations; preserve them when reconciling an update conflict. Do not edit the installation record to hide conflicts.
+This adoption pins OpenGuidePlatform v0.5.5. Select the intended release explicitly when updating, and review updates before committing. The workflows and the final site-specific paragraph in `.agents/agents.md` are deliberate local customizations; preserve them when reconciling an update conflict. Do not edit the installation record to hide conflicts.
 
 ## Delivery
 
-The workflow runs one Prepare → Build → Validate → Deploy → Verify chain. Prepare uses GitVersion to choose the site ring. Platform release selection is independent and uses the latest preview release.
+The workflow runs one Prepare → Build → Validate → Deploy → Verify chain. Prepare uses GitVersion to choose the site ring. Platform release selection is independent: local and hosted builds restore the release pinned in `.OpenGuidePlatform/installation.json`.
 
 - Pull requests: temporary canary sites; the deployment adds the actual URL to the PR.
 - Main: [preview site](https://purple-tree-00e22e403-preview.westeurope.5.azurestaticapps.net/).
