@@ -27,6 +27,5 @@ layman_description: |
 practitioner_description: |
   This is a curated, evidence-based reference for practitioners and leaders considering SAFe. It compiles lessons learned from real case studies, expert assessments, and alternatives. It is designed to expose potential pitfalls, encourage scrutiny, and support better-informed Agile scaling decisions.
 aliases:
-  - /safe-decision-makers/latest
   - /safe-decision-makers/details
 ---

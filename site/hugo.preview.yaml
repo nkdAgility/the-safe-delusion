@@ -1,4 +1,5 @@
 baseURL: https://purple-tree-00e22e403-preview.westeurope.5.azurestaticapps.net
 Environment: "preview"
-minifyOutput: true
+minify:
+  minifyOutput: true
 
