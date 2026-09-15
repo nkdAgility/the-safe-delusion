@@ -1,0 +1,15 @@
+platform:
+  version: v1
+  ring: production
+site:
+  source: site
+delivery:
+  production:
+    url: https://safedelusion.com/
+    environment: ""
+  canary:
+    url: https://purple-tree-00e22e403-{pr}.westeurope.5.azurestaticapps.net/
+    environment: '{pr}'
+  preview:
+    url: https://purple-tree-00e22e403-preview.westeurope.5.azurestaticapps.net/
+    environment: preview
