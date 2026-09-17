@@ -21,9 +21,8 @@ languages:
     weight: 1
     title: SAFe Delusion
     params:
-      # Language params override the site-level ones, so this is the value the
-      # module uses to build the home page <title> as "{{ Site.Title }} - {{ this }}".
-      # Keep it short. The full home description lives in content/_index.md.
+      seo_title: "The SAFe Delusion | Evidence for Decision-Makers"
+      # The full homepage description lives in content/_index.md.
       description: the evidence on SAFe, in one place
       keywords: SAFe, Delusion, Agile, Framework, Decision-Makers
 
@@ -50,10 +49,7 @@ menu:
 
 # Site-wide parameters
 params:
-  # Kept short deliberately: the module builds the home page <title> as
-  # "{{ .Site.Title }} - {{ .Site.Params.Description }}", so a long value here
-  # produced a 208-character title tag. The full home page description lives in
-  # content/_index.md, which takes precedence for the meta description.
+  # Fallback description; content/_index.md supplies the homepage description.
   description: "the evidence on SAFe, in one place"
   keywords: "SAFe, Scaled Agile Framework, Agile"
   og_image: "/images/og-image.jpg" # URL to the default Open Graph image
