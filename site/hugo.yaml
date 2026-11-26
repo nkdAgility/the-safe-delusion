@@ -49,6 +49,29 @@ menu:
 
 # Site-wide parameters
 params:
+  contributorPresentation:
+    starFlag: founder
+  contributorFilters:
+    homepage:
+      requireAnyRole: [contributor, creator]
+    guideDetails:
+      requireAnyRole: [contributor, creator]
+      requireAllFlags: [founder]
+    versionCard:
+      requireAnyRole: [contributor, creator]
+      requireAllFlags: [founder]
+    creators:
+      requireAnyRole: [creator]
+      requireAllFlags: [founder]
+    officialTranslation:
+      requireAnyRole: [contributor, creator]
+      requireAllFlags: [founder]
+    jsonLdAuthors:
+      requireAnyRole: [creator]
+      requireAllFlags: [founder]
+    guideContributors:
+      requireAnyRole: [contributor, creator, reviewer]
+      requireAllFlags: [founder]
   # Fallback description; content/_index.md supplies the homepage description.
   description: "the evidence on SAFe, in one place"
   keywords: "SAFe, Scaled Agile Framework, Agile"
