@@ -184,8 +184,7 @@
       </p>
 
       {{- range (where site.Sections "Type" "guide") }}
-        {{- $contributors := partial "functions/get-contributors.html" . -}}
-        {{- $contributors = where $contributors "role" "in" (slice "contributor" "creator") -}}
+        {{- $contributors := partial "functions/get-contributors.html" (dict "context" . "filter" "homepage") -}}
         {{- if $contributors -}}
           <div class="source-people">
             <span class="evidence-label">Curated and contributed to by</span>

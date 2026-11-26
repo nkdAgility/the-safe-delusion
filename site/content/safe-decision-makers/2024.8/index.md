@@ -8,9 +8,6 @@ keywords:
   - Scaled Agile
   - Scaled Agile Framework
 type: guide
-mainfont: "Times New Roman"
-sansfont: "Arial"
-monofont: "Courier New"
 sitemap:
   priority: 1.0
 guide_whatis: |
