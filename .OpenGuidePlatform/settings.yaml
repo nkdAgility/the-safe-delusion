@@ -1,15 +1,15 @@
 platform:
-  version: v2.1.0
-  ring: production
+  version: v2.2.0-Preview.1
+  ring: preview
+site:
+  source: site
 delivery:
-  canary:
-    url: https://purple-tree-00e22e403-{pr}.westeurope.5.azurestaticapps.net/
-    environment: '{pr}'
   preview:
     url: https://purple-tree-00e22e403-preview.westeurope.5.azurestaticapps.net/
     environment: preview
+  canary:
+    url: https://purple-tree-00e22e403-{pr}.westeurope.5.azurestaticapps.net/
+    environment: '{pr}'
   production:
     url: https://safedelusion.com/
     environment: ""
-site:
-  source: site

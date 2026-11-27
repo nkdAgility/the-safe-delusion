@@ -7,7 +7,7 @@ The job is **the wrapper pages around that guide**. Nothing else.
 ## Boundaries
 
 - **Do not touch `site/content/safe-decision-makers/**`.** Published, audited item — the guide markdown, its PDF, `_index.md`, `history/`, `translations/`. Read it, never write it. Do not alter how its pages render.
-- **Do not override the HugoGuides module** (`github.com/nkdAgility/HugoGuides/module`, `site/go.mod`). No new files under `site/layouts/` that shadow a module template. Pages render with module layouts; custom markup goes inline in the page — goldmark has `unsafe: true` (`site/hugo.yaml`).
+- **Do not override the HugoGuides module** (`github.com/nkdAgility/OpenGuidePlatform/system/OpenGuidePlatform.Hugo.Guides/v2`, `site/go.mod`). No new files under `site/layouts/` that shadow a module template. Pages render with module layouts; custom markup goes inline in the page — goldmark has `unsafe: true` (`site/hugo.yaml`).
 - **Do not touch the build.** No CI, deployment config, routing config, `hugo*.yaml` or `go.mod`.
 - No suggestions outside the wrapper pages.
 
@@ -46,7 +46,7 @@ Unaudited site editorial must never be mistaken for the audited document. Show t
 
 `site/layouts/index.html` is the home template. Three blocks are hand-written HTML copying guide prose — the executive summary (lines 77–96), observed trends (99–119) and the message to SAFe coaches (176–194). That is where the pages have forked from the guide.
 
-The same file already derives correctly elsewhere: the "At a Glance" card (45–67) reads `.Params.guide_comparison` from the guide section, and the contributors card (157–171) uses the module's `functions/get-contributors.html` against `site/data/contributions/safe-decision-makers.yml`. Copy that pattern.
+The same file already derives correctly elsewhere: the "At a Glance" card (45–67) reads `.Params.guide_comparison` from the guide section, and the contributors card (157–171) uses the module's `functions/get-contributors.html` against `site/content/safe-decision-makers/data/contributors.yml`. Copy that pattern.
 
 `site/layouts/old.index.html` is a leftover and is not in use.
 
